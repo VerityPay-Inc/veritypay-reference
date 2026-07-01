@@ -232,6 +232,8 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Goal:** Provide **hooks for VP-CS runners** in `veritypay-conformance`.
 
+**Prerequisite:** [ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md) — reference interpreter public contract (Accepted).
+
 **Outputs:**
 
 - Stable entrypoint for scenario invocation (CLI or library—via ADR)

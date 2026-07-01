@@ -12,5 +12,6 @@ Process aligns with [veritypay-spec — ADR Guide](https://github.com/VerityPay-
 | [0004-minimal-evaluation-semantics.md](0004-minimal-evaluation-semantics.md) | Minimal Evaluation Semantics | Accepted |
 | [0005-evaluation-rule-architecture.md](0005-evaluation-rule-architecture.md) | Evaluation Rule Architecture | Accepted |
 | [0006-ruleset-architecture.md](0006-ruleset-architecture.md) | RuleSet Architecture | Accepted |
+| [0007-reference-interpreter-public-contract.md](0007-reference-interpreter-public-contract.md) | Reference Interpreter Public Contract | Accepted |
 
 New ADRs use the next sequential number: `NNNN-short-title.md`.

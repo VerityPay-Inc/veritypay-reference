@@ -19,6 +19,7 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | [docs/adrs/README.md](docs/adrs/README.md) | Architecture Decision Records |
 | [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) | ADR-0001 — Implementation language (Rust) |
 | [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) | ADR-0002 — Cargo workspace architecture |
+| [docs/adrs/0007-reference-interpreter-public-contract.md](docs/adrs/0007-reference-interpreter-public-contract.md) | ADR-0007 — Public interpreter contract (`evaluate`) |
 | [LICENSE](LICENSE) | License terms for this repository |
 
 ---
@@ -39,6 +40,8 @@ This repository is the **reference interpreter**, not a [reference implementatio
 It is **readable code that executes the behavior defined by [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec)**—a **reference interpreter** for education, conformance, and review, not a canonical production pattern.
 
 The interpreter **follows** the specification. It never **defines** it.
+
+**Public contract** ([ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md)): `EvaluationContext` → `Interpreter::evaluate` → `VerificationResult`. Downstream consumers (CLI, reports, conformance) should depend on this call shape—not internal rule implementations.
 
 ---
 
