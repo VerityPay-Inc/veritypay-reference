@@ -94,21 +94,34 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 **Prerequisite:** [ADR-0003](docs/adrs/0003-domain-model-architecture.md) — domain model architecture (Accepted, v1.1.0).
 
+### Milestone C.1 — Domain types and builders *(complete)*
+
+Pure domain types and builders in `vp-reference-model` per ADR-0003 v1.1.0. No parsers, `EvaluationContext` expansion, or verification logic.
+
+**Success criteria (C.1):**
+
+- [x] Domain types match ADR-0003 identity/content split (`Assertion`, `EvidenceContent`, envelopes, identifiers)
+- [x] `ClaimBuilder`, `EvidenceBuilder`, `TraceBuilder`, `VerificationResultBuilder` construct readable fixtures
+- [x] No normative fields beyond minimal generic assertion/evidence content
+- [x] No file or JSON parsers
+
+### Milestone C — remaining
+
 **Outputs:**
 
 - [docs/adrs/0003-domain-model-architecture.md](docs/adrs/0003-domain-model-architecture.md) — ADR-0003: domain pyramid, `EvaluationContext`, builders (Accepted)
-- `Claim`, `Assertion`, `Evidence`, `EvidenceContent` in `vp-reference-model`
-- `ClaimBuilder`, `EvidenceBuilder`, `VerificationResultBuilder`, `TraceBuilder`
+- `Claim`, `Assertion`, `Evidence`, `EvidenceContent` in `vp-reference-model` *(C.1)*
+- `ClaimBuilder`, `EvidenceBuilder`, `VerificationResultBuilder`, `TraceBuilder` *(C.1)*
 - `EvaluationContext` in `vp-reference-core` (spec + claim + evidence; options stub)
-- Unit tests constructing evaluation inputs via builders
+- Unit tests constructing evaluation inputs via builders *(C.1)*
 
 **Success criteria:**
 
-- [ ] Domain types match ADR-0003 identity/content split
-- [ ] Builders construct minimal claim and evidence fixtures without sprawling struct literals
+- [x] Domain types match ADR-0003 identity/content split
+- [x] Builders construct minimal claim and evidence fixtures without sprawling struct literals
 - [ ] `EvaluationContext` bundles specification, claim, and evidence for a single evaluation
-- [ ] No normative claim or evidence fields invented beyond accepted spec documents
-- [ ] No file or JSON parsers required for this milestone phase
+- [x] No normative claim or evidence fields invented beyond accepted spec documents
+- [x] No file or JSON parsers required for this milestone phase
 
 **Not included:**
 
