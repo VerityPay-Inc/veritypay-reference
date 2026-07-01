@@ -145,26 +145,30 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 ## Milestone D — Evaluate minimal claim
 
-**Goal:** Run the **interpreter** against a minimal claim under loaded specification rules.
+**Goal:** Run the **interpreter** against a minimal claim under the first executable rule set.
+
+**Prerequisite:** [ADR-0004](docs/adrs/0004-minimal-evaluation-semantics.md) — minimal evaluation semantics (Accepted).
 
 **Outputs:**
 
-- Interpreter component applying a minimal rule subset from accepted architecture docs
-- Evidence input paired with claim (minimal fixture)
-- Internal verification step producing a decision (not yet a formal outcome record)
+- [docs/adrs/0004-minimal-evaluation-semantics.md](docs/adrs/0004-minimal-evaluation-semantics.md) — ADR-0004: body-equality rule, `evaluate(context)` contract (Accepted)
+- `Interpreter::evaluate(&EvaluationContext) -> VerificationResult` in `vp-reference-interpreter`
+- Fixture-driven unit tests per ADR-0004 outcome table
 
 **Success criteria:**
 
-- [ ] Minimal claim + evidence evaluates without manual spec reading
-- [ ] Evaluation uses loaded specification context—not hard-coded prose copies
-- [ ] Rule failures cite spec-derived reasons where milestones support it
+- [ ] `evaluate` consumes `EvaluationContext` and returns frozen `VerificationResult`
+- [ ] Minimal rule outcomes match ADR-0004 (`satisfied` / `not_satisfied` / `indeterminate`)
+- [ ] Trace events emitted when `trace_enabled`; empty trace when disabled
+- [ ] `SpecificationContext` bound on result; rule does not require manual spec reading
 - [ ] Code remains readable; performance is not a success criterion
 
 **Not included:**
 
+- Normative spec rules from architecture documents
 - Full architecture model coverage (domain, behavior, state—expanded incrementally)
-- Formal outcome type (Milestone E)
-- Trace artifact (Milestone F)
+- Claim or evidence parsing
+- CLI or report changes
 - VP-CS runner integration (Milestone G)
 
 ---

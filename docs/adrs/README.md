@@ -9,5 +9,6 @@ Process aligns with [veritypay-spec — ADR Guide](https://github.com/VerityPay-
 | [0001-reference-implementation-language.md](0001-reference-implementation-language.md) | Implementation Language for veritypay-reference | Accepted |
 | [0002-workspace-architecture.md](0002-workspace-architecture.md) | Cargo Workspace Architecture | Accepted |
 | [0003-domain-model-architecture.md](0003-domain-model-architecture.md) | Domain Model Architecture | Accepted |
+| [0004-minimal-evaluation-semantics.md](0004-minimal-evaluation-semantics.md) | Minimal Evaluation Semantics | Accepted |
 
 New ADRs use the next sequential number: `NNNN-short-title.md`.
