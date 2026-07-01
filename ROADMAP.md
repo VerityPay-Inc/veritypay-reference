@@ -178,6 +178,8 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Goal:** Emit normative **verification outcomes** as defined by the conformance model.
 
+**Prerequisite (multi-rule expansion):** [ADR-0006](docs/adrs/0006-ruleset-architecture.md) — `RuleSet` architecture (Accepted).
+
 **Outputs:**
 
 - Outcome component: `satisfied`, `not_satisfied`, `indeterminate`
