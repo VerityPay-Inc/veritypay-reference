@@ -16,6 +16,8 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Long-term component model—conceptual, not implementation |
 | [ROADMAP.md](ROADMAP.md) | Capability milestones A–G with success criteria |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute to the reference interpreter |
+| [docs/adrs/README.md](docs/adrs/README.md) | Architecture Decision Records |
+| [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) | ADR-0001 — Implementation language (Rust) |
 | [LICENSE](LICENSE) | License terms for this repository |
 
 ---
