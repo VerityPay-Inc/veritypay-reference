@@ -1,0 +1,240 @@
+# Roadmap
+
+**Capability-based roadmap for `veritypay-reference`.**
+
+This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
+
+**Current milestone:** **A — Repository scaffold** *(complete when this document and sibling scaffold files are merged)*
+
+---
+
+## Overview
+
+| Milestone | Name | Status |
+|-----------|------|--------|
+| **A** | Repository scaffold | **Complete** (documentation) |
+| **B** | Load specification model | Not started |
+| **C** | Parse minimal claim | Not started |
+| **D** | Evaluate minimal claim | Not started |
+| **E** | Produce verification outcome | Not started |
+| **F** | Produce trace | Not started |
+| **G** | Conformance integration | Not started |
+
+Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and **Not included** so scope stays explicit.
+
+---
+
+## Milestone A — Repository scaffold
+
+**Goal:** Establish `veritypay-reference` as a mature **engineering project** before interpreter code exists—clear purpose, architecture, contribution rules, and boundaries with `veritypay-spec` and `veritypay-tooling`.
+
+**Outputs:**
+
+- [README.md](README.md) — purpose, boundaries, links to sibling repos
+- [ARCHITECTURE.md](ARCHITECTURE.md) — component model (conceptual; no implementation language)
+- [ROADMAP.md](ROADMAP.md) — this document with milestones A–G
+- [CONTRIBUTING.md](CONTRIBUTING.md) — contributor expectations and specification boundary
+- [LICENSE](LICENSE) — license terms
+- Repository maturity declared: **Scaffold**
+
+**Success criteria:**
+
+- [x] A new contributor can explain what the reference interpreter does and does not do in five minutes
+- [x] Dependency on `veritypay-spec` is explicit and one-directional
+- [x] Relationship to `veritypay-tooling` and `vp-spec-model` is documented
+- [x] Milestones B–G each define goal, outputs, success criteria, and not-included scope
+- [x] No interpreter code merged under the pretense of "early MVP"
+
+**Not included:**
+
+- Interpreter implementation
+- Claim or evidence parsers
+- Dependency on `vp-spec-model` (deferred to Milestone B)
+- CI workflows or GitHub Actions
+- Language, framework, or package manager choice (deferred to ADR at Milestone B)
+- Changes to normative text in `veritypay-spec`
+
+---
+
+## Milestone B — Load specification model
+
+**Goal:** Load validated specification input through the shared typed model layer.
+
+**Prerequisite:** `veritypay-tooling` readiness gate passed; `vp-spec-model` stable for v1 ([ADR-0007](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md)).
+
+**Outputs:**
+
+- ADR for implementation language and repository layout (when code begins)
+- Integration path to `vp-spec-model` (`RegistrySet`, `DocumentCorpus`, `ReferenceGraph`)
+- Specification context bound to a version or Edition pin
+- Fixture or test harness loading a validated `veritypay-spec` checkout
+
+**Success criteria:**
+
+- [ ] Can load registries and document corpus from a validated spec tree
+- [ ] Specification version or Edition identifier is recorded on the loaded context
+- [ ] Missing or invalid spec input fails with a clear error—not silent partial load
+- [ ] No duplicate registry or document parsing logic where `vp-spec-model` suffices
+
+**Not included:**
+
+- Claim or evidence parsing (Milestone C)
+- Verification or outcome production (Milestones D–E)
+- Edition Manifest typed model (may use path pins until available in `vp-spec-model`)
+
+---
+
+## Milestone C — Parse minimal claim
+
+**Goal:** Accept a **minimal claim** input suitable for first semantic evaluation.
+
+**Outputs:**
+
+- Claim input component per [ARCHITECTURE.md](ARCHITECTURE.md)
+- Minimal claim fixture format aligned with [DATA_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md) (smallest viable subset)
+- Parse errors surfaced before evaluation
+
+**Success criteria:**
+
+- [ ] A documented minimal claim fixture parses successfully
+- [ ] Malformed claim input fails with actionable parse errors
+- [ ] Parsed claim is bound to the loaded specification context
+- [ ] No normative claim fields invented beyond accepted spec documents
+
+**Not included:**
+
+- Full claim type coverage
+- Evidence parsing beyond stubs (may pair with Milestone C fixtures)
+- Verification logic (Milestone D)
+- Network or file watchers for live claim intake
+
+---
+
+## Milestone D — Evaluate minimal claim
+
+**Goal:** Run the **interpreter** against a minimal claim under loaded specification rules.
+
+**Outputs:**
+
+- Interpreter component applying a minimal rule subset from accepted architecture docs
+- Evidence input paired with claim (minimal fixture)
+- Internal verification step producing a decision (not yet a formal outcome record)
+
+**Success criteria:**
+
+- [ ] Minimal claim + evidence evaluates without manual spec reading
+- [ ] Evaluation uses loaded specification context—not hard-coded prose copies
+- [ ] Rule failures cite spec-derived reasons where milestones support it
+- [ ] Code remains readable; performance is not a success criterion
+
+**Not included:**
+
+- Full architecture model coverage (domain, behavior, state—expanded incrementally)
+- Formal outcome type (Milestone E)
+- Trace artifact (Milestone F)
+- VP-CS runner integration (Milestone G)
+
+---
+
+## Milestone E — Produce verification outcome
+
+**Goal:** Emit normative **verification outcomes** as defined by the conformance model.
+
+**Outputs:**
+
+- Outcome component: `satisfied`, `not_satisfied`, `indeterminate`
+- `verify(claim, evidence, spec_version)` alignment with [CONFORMANCE_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md)
+- Stable outcome record for downstream comparison
+
+**Success criteria:**
+
+- [ ] At least one positive fixture yields `satisfied`
+- [ ] At least one negative fixture yields `not_satisfied`
+- [ ] Insufficient-evidence fixture yields `indeterminate` when spec requires it
+- [ ] Outcome is bound to specification version used at evaluation time
+- [ ] No non-normative outcome labels introduced
+
+**Not included:**
+
+- Full trace (Milestone F)
+- Conformance suite orchestration (Milestone G)
+- Cross-implementation interoperability testing (owned by `veritypay-conformance`)
+
+---
+
+## Milestone F — Produce trace
+
+**Goal:** Explain **how** the interpreter reached an outcome.
+
+**Outputs:**
+
+- Trace component recording ordered evaluation steps
+- Report component summarizing outcome + trace for human review
+- References to spec sections or VP-TERM IDs where applicable
+
+**Success criteria:**
+
+- [ ] Every outcome in Milestone E fixtures includes a trace
+- [ ] Trace steps are ordered and human-readable
+- [ ] Trace does not alter outcome—explanation only
+- [ ] Reviewer can follow claim → rules applied → outcome without reading source first
+
+**Not included:**
+
+- Machine-readable trace protocol for production systems (unless promoted upstream)
+- Conformance diff tooling (Milestone G / `veritypay-conformance`)
+- Performance profiling of trace capture
+
+---
+
+## Milestone G — Conformance integration
+
+**Goal:** Provide **hooks for VP-CS runners** in `veritypay-conformance`.
+
+**Outputs:**
+
+- Stable entrypoint for scenario invocation (CLI or library—via ADR)
+- Machine-readable outcome + trace export for CI
+- Documentation for running reference oracle against VP-CS fixtures
+- Alignment with at least one VP-CS scenario from `veritypay-spec`
+
+**Success criteria:**
+
+- [ ] `veritypay-conformance` (or equivalent harness) can invoke the reference interpreter without fork-specific glue
+- [ ] VP-CS-0001 or agreed minimal scenario produces expected outcome
+- [ ] Exit codes or structured results suitable for CI
+- [ ] Reference behavior documented as oracle—not mandatory production dependency
+
+**Not included:**
+
+- Authoring VP-CS scenario text (remains in `veritypay-spec`)
+- Certification, badges, or vendor programs
+- Production deployment or SDK packaging
+- Full VP-CS catalog coverage (incremental)
+
+---
+
+## After Milestone G
+
+The reference interpreter enters **maintenance and extension** mode: broader claim types, deeper architecture model coverage, and Edition-aware evaluation as spec governance defines them.
+
+**Explicitly deferred:**
+
+- SDK or integrator API surface
+- Blockchain adapters and chain-specific execution
+- Production performance optimization
+- Replacing independent implementations
+
+---
+
+## How to propose roadmap changes
+
+Roadmap changes are **reference governance**, not protocol changes.
+
+1. Open an issue describing capability gap and proposed milestone adjustment
+2. For structural evaluation contracts or public API changes, write an ADR in this repository
+3. If semantics imply **new normative spec requirements**, propose RFC in `veritypay-spec` first
+
+---
+
+*Capability before calendar. Readable semantics before performance.*
