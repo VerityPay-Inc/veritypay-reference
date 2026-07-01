@@ -32,6 +32,8 @@ fn workspace_crates_are_linkable() {
         .build()
         .expect("evaluation context");
 
+    let verification = Interpreter::new().evaluate(&evaluation);
+
     let result = VerificationResultBuilder::new()
         .evaluated_claim_id(claim.id.clone())
         .outcome(Outcome::Indeterminate)
@@ -41,6 +43,7 @@ fn workspace_crates_are_linkable() {
 
     let _ = (
         evaluation,
+        verification,
         ReferenceError::placeholder(),
         claim,
         evidence,

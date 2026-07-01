@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **C — Domain model and builders** *(complete)*
+**Current milestone:** **D — Evaluate minimal claim** *(complete)*
 
 ---
 
@@ -15,7 +15,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **A** | Repository scaffold | **Complete** |
 | **B** | Load specification model | **Complete** |
 | **C** | Domain model and builders | **Complete** |
-| **D** | Evaluate minimal claim | Not started |
+| **D** | Evaluate minimal claim | **Complete** |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
 | **G** | Conformance integration | Not started |
@@ -158,11 +158,11 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Success criteria:**
 
-- [ ] `evaluate` consumes `EvaluationContext` and returns frozen `VerificationResult`
-- [ ] Minimal rule outcomes match ADR-0004 (`satisfied` / `not_satisfied` / `indeterminate`)
-- [ ] Trace events emitted when `trace_enabled`; empty trace when disabled
-- [ ] `SpecificationContext` bound on result; rule does not require manual spec reading
-- [ ] Code remains readable; performance is not a success criterion
+- [x] `evaluate` consumes `EvaluationContext` and returns frozen `VerificationResult`
+- [x] Minimal rule outcomes match ADR-0004 (`satisfied` / `not_satisfied` / `indeterminate`)
+- [x] Trace events emitted when `trace_enabled`; empty trace when disabled
+- [x] `SpecificationContext` bound on result; rule does not require manual spec reading
+- [x] Code remains readable; performance is not a success criterion
 
 **Not included:**
 
