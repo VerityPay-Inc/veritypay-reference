@@ -2,7 +2,7 @@
 
 **Capability-based roadmap for `veritypay-reference`.**
 
-This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
+This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
 **Current milestone:** **A — Repository scaffold** *(complete when this document and sibling scaffold files are merged)*
 
@@ -47,7 +47,7 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 **Not included:**
 
-- Interpreter implementation
+- Interpreter source code
 - Claim or evidence parsers
 - Dependency on `vp-spec-model` (deferred to Milestone B)
 - CI workflows or GitHub Actions
@@ -60,11 +60,11 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 **Goal:** Load validated specification input through the shared typed model layer.
 
-**Prerequisite:** `veritypay-tooling` readiness gate passed; `vp-spec-model` stable for v1 ([ADR-0007](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md)).
+**Prerequisite:** `veritypay-tooling` readiness gate passed; `vp-spec-model` stable for v1 ([ADR-0007](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md)).
 
 **Outputs:**
 
-- ADR for implementation language and repository layout (when code begins)
+- [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) — ADR-0001: Rust (Accepted)
 - Integration path to `vp-spec-model` (`RegistrySet`, `DocumentCorpus`, `ReferenceGraph`)
 - Specification context bound to a version or Edition pin
 - Fixture or test harness loading a validated `veritypay-spec` checkout
@@ -91,7 +91,7 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 **Outputs:**
 
 - Claim input component per [ARCHITECTURE.md](ARCHITECTURE.md)
-- Minimal claim fixture format aligned with [DATA_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md) (smallest viable subset)
+- Minimal claim fixture format aligned with [DATA_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md) (smallest viable subset)
 - Parse errors surfaced before evaluation
 
 **Success criteria:**
@@ -143,7 +143,7 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 **Outputs:**
 
 - Outcome component: `satisfied`, `not_satisfied`, `indeterminate`
-- `verify(claim, evidence, spec_version)` alignment with [CONFORMANCE_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md)
+- `verify(claim, evidence, spec_version)` alignment with [CONFORMANCE_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md)
 - Stable outcome record for downstream comparison
 
 **Success criteria:**

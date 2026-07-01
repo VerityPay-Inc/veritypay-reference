@@ -19,7 +19,7 @@ superseded_by: null
 
 **Status:** Accepted · **Version:** 1.0.0 · **Date:** 2026-06-30
 
-**Related:** [README.md](../../README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) · [ROADMAP.md](../../ROADMAP.md) · [veritypay-tooling — ADR-0001](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0001-tooling-implementation-language.md) · [veritypay-spec — ADR Guide](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/ADR_GUIDE.md)
+**Related:** [README.md](../../README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) · [ROADMAP.md](../../ROADMAP.md) · [veritypay-tooling — ADR-0001](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0001-tooling-implementation-language.md) · [veritypay-spec — ADR Guide](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/ADR_GUIDE.md)
 
 ---
 
@@ -31,7 +31,7 @@ Choose the **implementation language** for the VerityPay reference interpreter.
 
 ## Context
 
-Milestone A established `veritypay-reference` as a **documentation-only scaffold**: purpose, architecture, roadmap, and contribution rules. Milestone B will load validated specification input through **`vp-spec-model`** in [`veritypay-tooling`](https://github.com/veritypay/veritypay-tooling).
+Milestone A established `veritypay-reference` as a **documentation-only scaffold**: purpose, architecture, roadmap, and contribution rules. Milestone B will load validated specification input through **`vp-spec-model`** in [`veritypay-tooling`](https://github.com/VerityPay-Inc/veritypay-tooling).
 
 Before implementation begins, the project must choose an implementation language. This is an **engineering decision**—not a protocol decision. It does not bind independent VerityPay implementers. It does bind how this repository evolves.
 
@@ -54,7 +54,7 @@ The primary reason is **not** raw performance. The reference interpreter is not 
 The primary reasons are:
 
 - **Same ecosystem as `veritypay-tooling`** — shared engineering conventions, CI patterns, and contributor context
-- **Consume `vp-spec-model` with least friction** — direct dependency on stable typed structures ([ADR-0007](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md))
+- **Consume `vp-spec-model` with least friction** — direct dependency on stable typed structures ([ADR-0007](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md))
 - **Strong typing** for claims, evidence, outcomes, and traces — explicit models that document intent
 - **Reliable CLI and test tooling** — reproducible local and CI runs for conformance hooks
 - **Long-term maintainability** — a codebase that remains readable as semantics expand across milestones B–G
@@ -198,9 +198,9 @@ Changing the implementation language **requires a new ADR**. Partial rewrites wi
 | [ARCHITECTURE.md](../../ARCHITECTURE.md) | Component model; language deferred until this ADR |
 | [ROADMAP.md](../../ROADMAP.md) | Milestone B proceeds after this ADR |
 | [CONTRIBUTING.md](../../CONTRIBUTING.md) | Correctness and readability over performance |
-| [veritypay-tooling — ADR-0001](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0001-tooling-implementation-language.md) | Tooling language choice (same ecosystem) |
-| [veritypay-tooling — ADR-0007](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md) | Stable `vp-spec-model` for consumers |
-| [veritypay-spec — ADR Guide](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/ADR_GUIDE.md) | ADR process |
+| [veritypay-tooling — ADR-0001](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0001-tooling-implementation-language.md) | Tooling language choice (same ecosystem) |
+| [veritypay-tooling — ADR-0007](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md) | Stable `vp-spec-model` for consumers |
+| [veritypay-spec — ADR Guide](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/ADR_GUIDE.md) | ADR process |
 
 ---
 

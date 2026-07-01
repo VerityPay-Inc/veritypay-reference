@@ -12,9 +12,9 @@ Read this before opening a pull request.
 
 These four statements govern every contribution to this repository:
 
-1. **Contributors implement specification behavior; they do not invent protocol behavior.** The interpreter applies rules from accepted documents and RFCs in [`veritypay-spec`](https://github.com/veritypay/veritypay-spec). When code and spec disagree on meaning, the specification wins and the interpreter is updated.
+1. **Contributors implement specification behavior; they do not invent protocol behavior.** The interpreter applies rules from accepted documents and RFCs in [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec). When code and spec disagree on meaning, the specification wins and the interpreter is updated.
 
-2. **Protocol changes belong in `veritypay-spec` through RFCs.** Normative changes flow through [VP-RFC-0000](https://github.com/veritypay/veritypay-spec/blob/main/rfcs/0000-rfc-process.md) and governance in `veritypay-spec`. Implement resulting semantics here only after they are accepted upstream.
+2. **Protocol changes belong in `veritypay-spec` through RFCs.** Normative changes flow through [VP-RFC-0000](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0000-rfc-process.md) and governance in `veritypay-spec`. Implement resulting semantics here only after they are accepted upstream.
 
 3. **The interpreter follows the spec.** This repository does not assign new meaning to VP-TERM IDs, introduce verification outcomes, or alter Architecture Alpha. It executes accepted semantics—not drafts, not product preferences.
 
@@ -44,12 +44,12 @@ We welcome engineers, specification readers, and conformance authors. You do not
 | 1 | [README.md](README.md) | Purpose, boundaries, maturity |
 | 2 | [ARCHITECTURE.md](ARCHITECTURE.md) | Component model and data flow |
 | 3 | [ROADMAP.md](ROADMAP.md) | Current milestone and success criteria |
-| 4 | [veritypay-spec — CONFORMANCE_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) | Verification outcomes and VP-CS |
-| 5 | [veritypay-spec — SPECIFICATION_STATUS](https://github.com/veritypay/veritypay-spec/blob/main/SPECIFICATION_STATUS.md) | Ecosystem maturity |
-| 6 | [veritypay-tooling — SPECIFICATION_MODEL](https://github.com/veritypay/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) | Shared typed input layer |
-| 7 | [veritypay-spec — Phase II Platform Plan](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) | Where the reference interpreter sits |
+| 4 | [veritypay-spec — CONFORMANCE_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) | Verification outcomes and VP-CS |
+| 5 | [veritypay-spec — SPECIFICATION_STATUS](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/SPECIFICATION_STATUS.md) | Ecosystem maturity |
+| 6 | [veritypay-tooling — SPECIFICATION_MODEL](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) | Shared typed input layer |
+| 7 | [veritypay-spec — Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) | Where the reference interpreter sits |
 
-For protocol and governance context, read [veritypay-spec — CONTRIBUTING](https://github.com/veritypay/veritypay-spec/blob/main/CONTRIBUTING.md) when your work touches semantics defined there.
+For protocol and governance context, read [veritypay-spec — CONTRIBUTING](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/CONTRIBUTING.md) when your work touches semantics defined there.
 
 ---
 
@@ -65,7 +65,7 @@ For protocol and governance context, read [veritypay-spec — CONTRIBUTING](http
 | Implement `verify(claim, evidence, spec_version)` for accepted rules | Pull request in **this** repository |
 | Validate registry YAML or fix broken links | Pull request in **`veritypay-tooling`** |
 | Run VP-CS suites and aggregate pass/fail | **`veritypay-conformance`** (future) |
-| Change Architecture Alpha | RFC in `veritypay-spec` ([GOVERNANCE](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/GOVERNANCE.md)) |
+| Change Architecture Alpha | RFC in `veritypay-spec` ([GOVERNANCE](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/GOVERNANCE.md)) |
 
 When unsure, **default to spec governance first.**
 
@@ -129,9 +129,9 @@ Before requesting review:
 
 | Repository | Relationship |
 |------------|--------------|
-| [`veritypay-spec`](https://github.com/veritypay/veritypay-spec) | Source of truth — defines meaning |
-| [`veritypay-tooling`](https://github.com/veritypay/veritypay-tooling) | Validates corpus; supplies `vp-spec-model` |
-| [`veritypay-conformance`](https://github.com/veritypay/veritypay-conformance) | VP-CS runners (future) — consumes reference outcomes |
+| [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) | Source of truth — defines meaning |
+| [`veritypay-tooling`](https://github.com/VerityPay-Inc/veritypay-tooling) | Validates corpus; supplies `vp-spec-model` |
+| [`veritypay-conformance`](https://github.com/VerityPay-Inc/veritypay-conformance) | VP-CS runners (future) — consumes reference outcomes |
 
 ---
 

@@ -6,9 +6,9 @@ This document describes **components, responsibilities, and data flow**. It does
 
 **Audience:** maintainers, contributors, implementers, auditors, and grant reviewers who need to understand what the reference interpreter will become—not how it is coded today.
 
-**Upstream dependency:** [`veritypay-spec`](https://github.com/veritypay/veritypay-spec) defines domain semantics, behavior, state, data representation, verification outcomes, and conformance scenarios. The interpreter **implements accepted semantics**; it does not invent normative requirements.
+**Upstream dependency:** [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) defines domain semantics, behavior, state, data representation, verification outcomes, and conformance scenarios. The interpreter **implements accepted semantics**; it does not invent normative requirements.
 
-**Shared input layer:** [`vp-spec-model`](https://github.com/veritypay/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) in `veritypay-tooling` provides typed specification structures. The interpreter consumes validated specification input through that layer where practical.
+**Shared input layer:** [`vp-spec-model`](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) in `veritypay-tooling` provides typed specification structures. The interpreter consumes validated specification input through that layer where practical.
 
 ---
 
@@ -20,8 +20,8 @@ This document describes **components, responsibilities, and data flow**. It does
 | **Readable over fast** | Code exists to be read, reviewed, and compared—not to win benchmarks |
 | **Traceable evaluation** | Outcomes must be explainable; opaque verdicts are unacceptable for a reference |
 | **Version-bound** | Every evaluation is tied to a specification version or Edition pin |
-| **Not normative** | This repository demonstrates behavior; [`veritypay-spec`](https://github.com/veritypay/veritypay-spec) defines it |
-| **Oracle, not gatekeeper** | Independent implementations may conform without shipping this code |
+| **Not normative** | This repository demonstrates behavior; [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) defines it |
+| **Oracle, not gatekeeper** | Independent implementations may conform without using this reference interpreter |
 
 ---
 
@@ -55,7 +55,7 @@ The reference interpreter produces **verification outcomes and traces**. It does
 
 ## Evaluation pipeline
 
-Conceptual flow aligned with [CONFORMANCE_MODEL.md — verification](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md):
+Conceptual flow aligned with [CONFORMANCE_MODEL.md — verification](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md):
 
 ```
 Specification input ──┐
@@ -125,7 +125,7 @@ Each stage below is a **component boundary**. Exact APIs and file layout are def
 **Responsibilities:**
 
 - Parse or deserialize evidence alongside the claim
-- Preserve linkage between claim and evidence as required by [DATA_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md)
+- Preserve linkage between claim and evidence as required by [DATA_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md)
 - Surface parse errors before verification begins
 
 **Boundaries:**
@@ -257,7 +257,7 @@ Each stage below is a **component boundary**. Exact APIs and file layout are def
 | Corpus validation (spec tree, registries, links) | `veritypay-tooling` |
 | Typed specification loading (`vp-spec-model`) | `veritypay-tooling` |
 | Claim/evidence/outcome semantics | `veritypay-spec` |
-| Reference evaluation implementation | **this repository** |
+| Reference interpreter evaluation | **this repository** |
 | VP-CS scenario text | `veritypay-spec` |
 | Running VP-CS suites, pass/fail aggregation | `veritypay-conformance` |
 
@@ -267,7 +267,7 @@ Each stage below is a **component boundary**. Exact APIs and file layout are def
 
 | Topic | Status |
 |-------|--------|
-| Implementation language | Deferred to first code milestone ADR |
+| Implementation language | Rust ([ADR-0001](docs/adrs/0001-reference-implementation-language.md)) |
 | CLI surface | Deferred to ROADMAP milestones |
 | Persistence, networking, blockchain adapters | Out of scope for reference interpreter |
 | Performance tuning | Explicitly subordinate to correctness and readability |
@@ -282,9 +282,9 @@ Each stage below is a **component boundary**. Exact APIs and file layout are def
 | [README.md](README.md) | Purpose and ecosystem boundaries |
 | [ROADMAP.md](ROADMAP.md) | Milestone delivery order |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Specification boundary for contributors |
-| [veritypay-spec — CONFORMANCE_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) | Verification outcomes and VP-CS |
-| [veritypay-tooling — SPECIFICATION_MODEL](https://github.com/veritypay/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) | Shared typed input layer |
-| [veritypay-spec — Phase II Platform Plan](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) | Platform context |
+| [veritypay-spec — CONFORMANCE_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) | Verification outcomes and VP-CS |
+| [veritypay-tooling — SPECIFICATION_MODEL](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) | Shared typed input layer |
+| [veritypay-spec — Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) | Platform context |
 
 ---
 

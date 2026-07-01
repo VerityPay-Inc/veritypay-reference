@@ -13,7 +13,7 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | Document | Description |
 |----------|-------------|
 | [README.md](README.md) | Purpose, boundaries, and ecosystem links *(this file)* |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Long-term component model—conceptual, not implementation |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Long-term component model—conceptual, not executable code |
 | [ROADMAP.md](ROADMAP.md) | Capability milestones A–G with success criteria |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute to the reference interpreter |
 | [docs/adrs/README.md](docs/adrs/README.md) | Architecture Decision Records |
@@ -24,7 +24,9 @@ This repository is part of the **Verity Specification Platform**. It implements 
 
 ## What is the reference interpreter?
 
-The **reference interpreter** ([VP-TERM-027](https://github.com/veritypay/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-interpreter)) is an **executable artifact** that evaluates claims and verification rules for education and conformance. It makes normative semantics **testable** without mandating one production stack.
+The **reference interpreter** ([VP-TERM-027](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-interpreter)) is an **executable artifact** that evaluates claims and verification rules for education and conformance. It makes normative semantics **testable** without mandating one production stack.
+
+This repository is the **reference interpreter**, not a [reference implementation (VP-TERM-026)](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-implementation) in the production-pattern sense. VP-TERM-026 describes software that demonstrates accepted behavior broadly; this repo **executes** specification semantics for interpretation, verification, and review.
 
 `veritypay-reference` is **not**:
 
@@ -33,7 +35,7 @@ The **reference interpreter** ([VP-TERM-027](https://github.com/veritypay/verity
 - a payment application or wallet
 - the owner of protocol truth
 
-It is **readable code that executes the behavior defined by [`veritypay-spec`](https://github.com/veritypay/veritypay-spec)**—a **reference interpreter** for education, conformance, and review, not a canonical production pattern.
+It is **readable code that executes the behavior defined by [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec)**—a **reference interpreter** for education, conformance, and review, not a canonical production pattern.
 
 The interpreter **follows** the specification. It never **defines** it.
 
@@ -47,7 +49,7 @@ Phase II requires semantics to become **executable**—so that independent imple
 
 Manual reading of architecture documents does not scale for:
 
-- **Conformance scenarios** ([VP-CS](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md)) that require reproducible outcomes
+- **Conformance scenarios** ([VP-CS](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md)) that require reproducible outcomes
 - **Grant and audit audiences** who need runnable evidence of specification behavior
 - **Implementers** who need an oracle to compare against—not a hidden source of truth
 
@@ -57,7 +59,7 @@ Manual reading of architecture documents does not scale for:
 - `veritypay-conformance` has a **default oracle** for expected outcomes
 - Educators and reviewers can trace **claim → evidence → outcome** in code aligned with accepted documents
 
-See [Phase II Platform Plan](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) in `veritypay-spec`.
+See [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) in `veritypay-spec`.
 
 ---
 
@@ -77,19 +79,19 @@ veritypay-conformance     ← VP-CS runners (future)
 |----------------|------------------|------------------------|
 | Protocol meaning | Yes | No — implements accepted meaning |
 | Claim and evidence schemas | Yes | Reads; does not author normatively |
-| Verification rules | Documented in architecture and RFCs | Implemented here as reference behavior |
+| Verification rules | Documented in architecture and RFCs | Executed here by the reference interpreter |
 | VP-CS scenario text | Authoritative prose | Executes scenarios when wired by conformance |
 | Edition / specification version binding | Governed in spec | Honors pinned version at evaluation time |
 
 When the interpreter and specification disagree on **what the protocol means**, the specification wins. The interpreter is updated—not the protocol.
 
-Normative sources include [DOMAIN_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/DOMAIN_MODEL.md), [BEHAVIOR_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/BEHAVIOR_MODEL.md), [STATE_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/STATE_MODEL.md), [DATA_MODEL](https://github.com/veritypay/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md), and accepted RFCs.
+Normative sources include [DOMAIN_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DOMAIN_MODEL.md), [BEHAVIOR_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/BEHAVIOR_MODEL.md), [STATE_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/STATE_MODEL.md), [DATA_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md), and accepted RFCs.
 
 ---
 
 ## Relationship to veritypay-tooling and vp-spec-model
 
-[`veritypay-tooling`](https://github.com/veritypay/veritypay-tooling) validates that the specification corpus is **internally consistent** before semantics are executed. [`vp-spec-model`](https://github.com/veritypay/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) provides a **stable typed representation** of registries, documents, and references ([ADR-0007](https://github.com/veritypay/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md)).
+[`veritypay-tooling`](https://github.com/VerityPay-Inc/veritypay-tooling) validates that the specification corpus is **internally consistent** before semantics are executed. [`vp-spec-model`](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) provides a **stable typed representation** of registries, documents, and references ([ADR-0007](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/adrs/0007-specification-model-stability.md)).
 
 | Layer | Role for this repository |
 |-------|--------------------------|
@@ -143,12 +145,12 @@ Long-term structure: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 | Resource | Location |
 |----------|----------|
-| Specification home | [veritypay-spec](https://github.com/veritypay/veritypay-spec) |
-| Conformance model | [CONFORMANCE_MODEL.md](https://github.com/veritypay/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) |
-| Phase II platform plan | [PHASE_II_PLATFORM_PLAN.md](https://github.com/veritypay/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) |
-| Specification tooling | [veritypay-tooling](https://github.com/veritypay/veritypay-tooling) |
-| Specification model | [SPECIFICATION_MODEL.md](https://github.com/veritypay/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) |
-| VP-TERM: Reference Interpreter | [GLOSSARY — VP-TERM-027](https://github.com/veritypay/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-interpreter) |
+| Specification home | [veritypay-spec](https://github.com/VerityPay-Inc/veritypay-spec) |
+| Conformance model | [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) |
+| Phase II platform plan | [PHASE_II_PLATFORM_PLAN.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) |
+| Specification tooling | [veritypay-tooling](https://github.com/VerityPay-Inc/veritypay-tooling) |
+| Specification model | [SPECIFICATION_MODEL.md](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) |
+| VP-TERM: Reference Interpreter | [GLOSSARY — VP-TERM-027](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-interpreter) |
 
 ---
 
