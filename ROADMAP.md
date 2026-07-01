@@ -92,8 +92,11 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 **Goal:** Accept a **minimal claim** input suitable for first semantic evaluation.
 
+**Prerequisite:** [ADR-0003](docs/adrs/0003-domain-model-architecture.md) — domain model architecture (Accepted).
+
 **Outputs:**
 
+- [docs/adrs/0003-domain-model-architecture.md](docs/adrs/0003-domain-model-architecture.md) — ADR-0003: domain model pyramid (Accepted)
 - Claim input component per [ARCHITECTURE.md](ARCHITECTURE.md)
 - Minimal claim fixture format aligned with [DATA_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md) (smallest viable subset)
 - Parse errors surfaced before evaluation

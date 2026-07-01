@@ -371,7 +371,7 @@ Revisit this ADR only if:
 - `vp-spec-model` integration requires a layout change that cannot be accommodated within `vp-reference-spec`
 - An accepted ADR supersedes this layout
 
-Splitting or merging crates requires **ADR-0003** (or successor)—not drive-by refactors.
+Splitting or merging crates requires **a successor ADR**—not drive-by refactors.
 
 ---
 
