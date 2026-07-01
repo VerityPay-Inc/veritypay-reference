@@ -147,31 +147,57 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Goal:** Run the **interpreter** against a minimal claim under the first executable rule set.
 
-**Prerequisite:** [ADR-0004](docs/adrs/0004-minimal-evaluation-semantics.md) — minimal evaluation semantics (Accepted); [ADR-0005](docs/adrs/0005-evaluation-rule-architecture.md) — evaluation rule architecture (Accepted).
+**Prerequisite:** [ADR-0004](docs/adrs/0004-minimal-evaluation-semantics.md) — minimal evaluation semantics (Accepted, superseded by [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md) at D.3); [ADR-0005](docs/adrs/0005-evaluation-rule-architecture.md) — evaluation rule architecture (Accepted).
 
 **Outputs:**
 
-- [docs/adrs/0004-minimal-evaluation-semantics.md](docs/adrs/0004-minimal-evaluation-semantics.md) — ADR-0004: body-equality rule, `evaluate(context)` contract (Accepted)
-- [docs/adrs/0005-evaluation-rule-architecture.md](docs/adrs/0005-evaluation-rule-architecture.md) — ADR-0005: `EvaluationRule`, `MinimalBodyEqualityRule` (Accepted)
+- [docs/adrs/0004-minimal-evaluation-semantics.md](docs/adrs/0004-minimal-evaluation-semantics.md) — ADR-0004: engineering scaffold for first rule (Accepted; normative semantics now **VP-RULE-0001** / **VP-RFC-0001**)
+- [docs/adrs/0005-evaluation-rule-architecture.md](docs/adrs/0005-evaluation-rule-architecture.md) — ADR-0005: `EvaluationRule`, `VpRule0001` (Accepted)
 - [docs/adrs/0006-ruleset-architecture.md](docs/adrs/0006-ruleset-architecture.md) — ADR-0006: `RuleSet` orchestration (Accepted, implemented)
 - `Interpreter::evaluate(&EvaluationContext) -> VerificationResult` in `vp-reference-interpreter`
-- Fixture-driven unit tests per ADR-0004 outcome table
+- Fixture-driven unit tests per **VP-RULE-0001** outcome table
 
 **Success criteria:**
 
 - [x] `evaluate` consumes `EvaluationContext` and returns frozen `VerificationResult`
-- [x] Minimal rule outcomes match ADR-0004 (`satisfied` / `not_satisfied` / `indeterminate`)
+- [x] Minimal rule outcomes match [VP-RULE-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md) (`satisfied` / `not_satisfied` / `indeterminate`)
 - [x] Trace events emitted when `trace_enabled`; empty trace when disabled
 - [x] `SpecificationContext` bound on result; rule does not require manual spec reading
 - [x] Code remains readable; performance is not a success criterion
 
 **Not included:**
 
-- Normative spec rules from architecture documents
+- Additional normative spec rules beyond the first minimal slice
 - Full architecture model coverage (domain, behavior, state—expanded incrementally)
 - Claim or evidence parsing
 - CLI or report changes
 - VP-CS runner integration (Milestone G)
+
+---
+
+## Milestone D.3 — Normative rule ownership
+
+**Goal:** Replace ADR-0004 evaluation scaffolding with the first normative protocol rule from `veritypay-spec`.
+
+**Prerequisite:** [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md) — minimal claim and evidence semantics (draft); Milestone D interpreter path (complete).
+
+**Outputs:**
+
+- `VpRule0001` implementing **VP-RULE-0001** (Assertion Body Evidence Match)
+- Rule reference `VP-RULE-0001` on trace events and rule evaluations
+- Fixture-driven tests renamed to VP-RULE-0001 profile
+
+**Success criteria:**
+
+- [x] Evaluation outcomes unchanged from Milestone D (`satisfied` / `not_satisfied` / `indeterminate`)
+- [x] Rule layer cites **VP-RFC-0001** / **VP-RULE-0001** instead of ADR-0004 scaffolding labels
+- [x] Public interpreter contract unchanged (`EvaluationContext` → `evaluate` → `VerificationResult`)
+
+**Not included:**
+
+- Negative VP-CS scenarios beyond existing fixture table
+- VP-RULE registry publication in spec
+- Conformance harness spec-path loading
 
 ---
 

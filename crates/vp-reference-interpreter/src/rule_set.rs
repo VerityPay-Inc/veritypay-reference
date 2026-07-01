@@ -3,7 +3,7 @@
 use std::fmt;
 
 use crate::rule::EvaluationRule;
-use crate::rules::MinimalBodyEqualityRule;
+use crate::rules::VpRule0001;
 
 /// Owns a deterministic, ordered sequence of [`EvaluationRule`] implementations.
 pub struct RuleSet {
@@ -19,10 +19,10 @@ impl fmt::Debug for RuleSet {
 }
 
 impl RuleSet {
-    /// Milestone D rule set: [`MinimalBodyEqualityRule`] only.
+    /// Milestone D rule set: [`VpRule0001`] only.
     #[must_use]
     pub fn milestone_d() -> Self {
-        Self::from_rules(vec![Box::new(MinimalBodyEqualityRule)])
+        Self::from_rules(vec![Box::new(VpRule0001)])
     }
 
     #[must_use]

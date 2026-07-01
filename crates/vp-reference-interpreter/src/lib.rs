@@ -10,4 +10,4 @@ pub use interpreter::Interpreter;
 pub use rule::EvaluationRule;
 pub use rule_evaluation::RuleEvaluation;
 pub use rule_set::RuleSet;
-pub use rules::{MinimalBodyEqualityRule, MINIMAL_BODY_EQUALITY_RULE_REFERENCE};
+pub use rules::{VpRule0001, VP_RULE_0001_REFERENCE};

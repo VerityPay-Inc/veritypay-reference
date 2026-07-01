@@ -1,5 +1,5 @@
-//! Verification rule implementations.
+//! Evaluation rules implementing normative protocol semantics.
 
-mod minimal_body_equality;
+mod vp_rule_0001;
 
-pub use minimal_body_equality::{MinimalBodyEqualityRule, MINIMAL_BODY_EQUALITY_RULE_REFERENCE};
+pub use vp_rule_0001::{VpRule0001, VP_RULE_0001_REFERENCE};

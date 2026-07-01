@@ -8,7 +8,7 @@ use vp_reference_model::{
 
 use crate::rule_evaluation::RuleEvaluation;
 use crate::rule_set::RuleSet;
-use crate::rules::MINIMAL_BODY_EQUALITY_RULE_REFERENCE;
+use crate::rules::VP_RULE_0001_REFERENCE;
 
 /// Reference interpreter — orchestrates evaluation rules per ADR-0005 and ADR-0006.
 #[derive(Debug)]
@@ -100,15 +100,16 @@ fn build_trace(context: &EvaluationContext, rule_evaluation: &RuleEvaluation) ->
     let outcome_label = rule_evaluation.outcome.as_str();
 
     let builder = TraceBuilder::new()
-        .message(event_id(1), format!("evaluation started for claim {claim_id}"))
+        .message(
+            event_id(1),
+            format!("evaluation started for claim {claim_id}"),
+        )
         .event(
             TraceEvent::new(
                 event_id(2),
-                format!(
-                    "applied rule {MINIMAL_BODY_EQUALITY_RULE_REFERENCE} to assertion.body and content.body"
-                ),
+                format!("applied rule {VP_RULE_0001_REFERENCE} to assertion.body and content.body"),
             )
-            .with_rule_reference(MINIMAL_BODY_EQUALITY_RULE_REFERENCE),
+            .with_rule_reference(VP_RULE_0001_REFERENCE),
         )
         .message(
             event_id(3),

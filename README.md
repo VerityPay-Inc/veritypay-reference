@@ -43,6 +43,8 @@ The interpreter **follows** the specification. It never **defines** it.
 
 **Public contract** ([ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md)): `EvaluationContext` → `Interpreter::evaluate` → `VerificationResult`. Downstream consumers (CLI, reports, conformance) should depend on this call shape—not internal rule implementations.
 
+The first implemented protocol rule is **VP-RULE-0001** from [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) ([VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md)).
+
 ---
 
 ## Why does it exist?

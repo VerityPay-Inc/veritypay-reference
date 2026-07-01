@@ -1,11 +1,10 @@
-//! Minimal interpreter evaluation tests (Milestone D / ADR-0004).
+//! VP-RULE-0001 interpreter evaluation tests (Milestone D.3 / VP-RFC-0001).
 
 use vp_reference_core::{
     EvaluationContext, EvaluationOptions, SpecificationContext, SpecificationSummary,
 };
 use vp_reference_interpreter::{
-    EvaluationRule, Interpreter, MinimalBodyEqualityRule, RuleEvaluation, RuleSet,
-    MINIMAL_BODY_EQUALITY_RULE_REFERENCE,
+    EvaluationRule, Interpreter, RuleEvaluation, RuleSet, VpRule0001, VP_RULE_0001_REFERENCE,
 };
 use vp_reference_model::{
     Assertion, ClaimBuilder, EvidenceBuilder, EvidenceContent, Outcome, SpecificationBinding,
@@ -172,7 +171,7 @@ fn deterministic_trace_ids_are_stable() {
     let rule_event = &first.trace.events()[1];
     assert_eq!(
         rule_event.rule_reference.as_ref().map(|r| r.as_str()),
-        Some(MINIMAL_BODY_EQUALITY_RULE_REFERENCE)
+        Some(VP_RULE_0001_REFERENCE)
     );
 }
 
@@ -184,7 +183,7 @@ fn interpreter_has_no_filesystem_dependency() {
 }
 
 #[test]
-fn minimal_body_equality_rule_evaluates_independently() {
+fn vp_rule_0001_evaluates_independently() {
     let context = evaluation_context(
         "alpha",
         "beta",
@@ -193,12 +192,12 @@ fn minimal_body_equality_rule_evaluates_independently() {
         EvaluationOptions::default(),
     );
 
-    let evaluation = MinimalBodyEqualityRule.evaluate(&context);
+    let evaluation = VpRule0001.evaluate(&context);
 
     assert_eq!(evaluation.outcome, Outcome::NotSatisfied);
     assert_eq!(
         evaluation.rule_reference.as_ref().map(|r| r.as_str()),
-        Some(MINIMAL_BODY_EQUALITY_RULE_REFERENCE)
+        Some(VP_RULE_0001_REFERENCE)
     );
     assert!(!evaluation.reason.is_empty());
 }
@@ -217,7 +216,7 @@ fn verification_result_includes_reason() {
 
     assert_eq!(
         result.reasons,
-        vec!["assertion body matches evidence content body"]
+        vec!["Assertion body matches evidence body (VP-RULE-0001)"]
     );
 }
 
