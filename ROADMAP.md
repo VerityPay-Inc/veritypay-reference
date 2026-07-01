@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **B — Load specification model** *(complete)*
+**Current milestone:** **C — Domain model and builders** *(complete)*
 
 ---
 
@@ -14,7 +14,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 |-----------|------|--------|
 | **A** | Repository scaffold | **Complete** |
 | **B** | Load specification model | **Complete** |
-| **C** | Domain model and builders | Not started |
+| **C** | Domain model and builders | **Complete** |
 | **D** | Evaluate minimal claim | Not started |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
@@ -105,21 +105,32 @@ Pure domain types and builders in `vp-reference-model` per ADR-0003 v1.1.0. No p
 - [x] No normative fields beyond minimal generic assertion/evidence content
 - [x] No file or JSON parsers
 
-### Milestone C — remaining
+### Milestone C.2 — EvaluationContext *(complete)*
+
+Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
+
+**Success criteria (C.2):**
+
+- [x] `EvaluationOptions` with `deterministic` and `trace_enabled` defaults
+- [x] `EvaluationContext` bundles specification, claim, evidence, and options
+- [x] `EvaluationContextBuilder` with clear errors for missing required fields
+- [x] No filesystem types in the evaluation input contract
+
+### Milestone C — complete
 
 **Outputs:**
 
 - [docs/adrs/0003-domain-model-architecture.md](docs/adrs/0003-domain-model-architecture.md) — ADR-0003: domain pyramid, `EvaluationContext`, builders (Accepted)
 - `Claim`, `Assertion`, `Evidence`, `EvidenceContent` in `vp-reference-model` *(C.1)*
 - `ClaimBuilder`, `EvidenceBuilder`, `VerificationResultBuilder`, `TraceBuilder` *(C.1)*
-- `EvaluationContext` in `vp-reference-core` (spec + claim + evidence; options stub)
-- Unit tests constructing evaluation inputs via builders *(C.1)*
+- `EvaluationContext`, `EvaluationOptions`, `EvaluationContextBuilder` in `vp-reference-core` *(C.2)*
+- Unit tests constructing evaluation inputs via builders *(C.1–C.2)*
 
 **Success criteria:**
 
 - [x] Domain types match ADR-0003 identity/content split
 - [x] Builders construct minimal claim and evidence fixtures without sprawling struct literals
-- [ ] `EvaluationContext` bundles specification, claim, and evidence for a single evaluation
+- [x] `EvaluationContext` bundles specification, claim, and evidence for a single evaluation
 - [x] No normative claim or evidence fields invented beyond accepted spec documents
 - [x] No file or JSON parsers required for this milestone phase
 

@@ -25,6 +25,13 @@ fn workspace_crates_are_linkable() {
         .build()
         .expect("evidence");
 
+    let evaluation = EvaluationContext::builder()
+        .specification_context(SpecificationContext::placeholder())
+        .claim(claim.clone())
+        .evidence(evidence.clone())
+        .build()
+        .expect("evaluation context");
+
     let result = VerificationResultBuilder::new()
         .evaluated_claim_id(claim.id.clone())
         .outcome(Outcome::Indeterminate)
@@ -33,8 +40,7 @@ fn workspace_crates_are_linkable() {
         .expect("result");
 
     let _ = (
-        EvaluationContext::placeholder(),
-        SpecificationContext::placeholder(),
+        evaluation,
         ReferenceError::placeholder(),
         claim,
         evidence,
