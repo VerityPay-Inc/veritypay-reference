@@ -154,6 +154,8 @@ veritypay-reference/
 ├── ROADMAP.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── scripts/
+│   └── readiness-gate.sh      ← local fmt, clippy, test, CLI smoke
 ├── .github/workflows/ci.yml   ← fmt, clippy, test
 ├── docs/
 │   └── adrs/
@@ -193,6 +195,14 @@ References: 1305
 ```
 
 This loads registries, documents, and the reference graph through [`vp-spec-model`](https://github.com/VerityPay-Inc/veritypay-tooling) and exposes a path-free `SpecificationContext` to downstream crates. It does not run tooling validators, parse claims, or evaluate verification logic.
+
+**Readiness gate** (from repository root):
+
+```bash
+./scripts/readiness-gate.sh
+```
+
+Runs `cargo fmt --check`, `cargo clippy`, `cargo test`, a CLI smoke run, and `load-spec` against sibling `../veritypay-spec` when present. Skips spec loading with a clear message if the checkout is absent.
 
 CI runs `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace`.
 
