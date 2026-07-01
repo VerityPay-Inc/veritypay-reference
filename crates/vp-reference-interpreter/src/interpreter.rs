@@ -6,14 +6,14 @@ use vp_reference_model::{
     VerificationResultBuilder,
 };
 
-use crate::rule::EvaluationRule;
 use crate::rule_evaluation::RuleEvaluation;
-use crate::rules::{MinimalBodyEqualityRule, MINIMAL_BODY_EQUALITY_RULE_REFERENCE};
+use crate::rule_set::RuleSet;
+use crate::rules::MINIMAL_BODY_EQUALITY_RULE_REFERENCE;
 
-/// Reference interpreter — orchestrates evaluation rules per ADR-0005.
-#[derive(Debug, Clone, PartialEq, Eq)]
+/// Reference interpreter — orchestrates evaluation rules per ADR-0005 and ADR-0006.
+#[derive(Debug)]
 pub struct Interpreter {
-    minimal_body_equality_rule: MinimalBodyEqualityRule,
+    rule_set: RuleSet,
 }
 
 impl Default for Interpreter {
@@ -25,9 +25,12 @@ impl Default for Interpreter {
 impl Interpreter {
     #[must_use]
     pub fn new() -> Self {
-        Self {
-            minimal_body_equality_rule: MinimalBodyEqualityRule,
-        }
+        Self::with_rule_set(RuleSet::milestone_d())
+    }
+
+    #[must_use]
+    pub fn with_rule_set(rule_set: RuleSet) -> Self {
+        Self { rule_set }
     }
 
     /// Bootstrap-compatible constructor.
@@ -36,10 +39,15 @@ impl Interpreter {
         Self::new()
     }
 
-    /// Evaluates the given context through the Milestone D rule set.
+    #[must_use]
+    pub fn rule_set(&self) -> &RuleSet {
+        &self.rule_set
+    }
+
+    /// Evaluates the given context through the configured rule set.
     #[must_use]
     pub fn evaluate(&self, context: &EvaluationContext) -> VerificationResult {
-        let rule_evaluation = self.minimal_body_equality_rule.evaluate(context);
+        let rule_evaluation = self.evaluate_rules(context);
         let trace = if context.options().trace_enabled {
             build_trace(context, &rule_evaluation)
         } else {
@@ -47,6 +55,21 @@ impl Interpreter {
         };
 
         build_verification_result(context, &rule_evaluation, trace)
+    }
+
+    fn evaluate_rules(&self, context: &EvaluationContext) -> RuleEvaluation {
+        let mut evaluations = self
+            .rule_set
+            .rules()
+            .iter()
+            .map(|rule| rule.evaluate(context));
+
+        let first = evaluations
+            .next()
+            .expect("rule set must contain at least one rule");
+
+        // Milestone D aggregation: single rule pass-through; last rule wins when multiple exist.
+        evaluations.fold(first, |_, next| next)
     }
 }
 

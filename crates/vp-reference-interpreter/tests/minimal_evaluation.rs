@@ -4,7 +4,8 @@ use vp_reference_core::{
     EvaluationContext, EvaluationOptions, SpecificationContext, SpecificationSummary,
 };
 use vp_reference_interpreter::{
-    EvaluationRule, Interpreter, MinimalBodyEqualityRule, MINIMAL_BODY_EQUALITY_RULE_REFERENCE,
+    EvaluationRule, Interpreter, MinimalBodyEqualityRule, RuleEvaluation, RuleSet,
+    MINIMAL_BODY_EQUALITY_RULE_REFERENCE,
 };
 use vp_reference_model::{
     Assertion, ClaimBuilder, EvidenceBuilder, EvidenceContent, Outcome, SpecificationBinding,
@@ -218,4 +219,53 @@ fn verification_result_includes_reason() {
         result.reasons,
         vec!["assertion body matches evidence content body"]
     );
+}
+
+struct OrderRecordingRule {
+    label: &'static str,
+    log: std::sync::Arc<std::sync::Mutex<Vec<&'static str>>>,
+}
+
+impl OrderRecordingRule {
+    fn new(label: &'static str, log: std::sync::Arc<std::sync::Mutex<Vec<&'static str>>>) -> Self {
+        Self { label, log }
+    }
+}
+
+impl EvaluationRule for OrderRecordingRule {
+    fn evaluate(&self, _context: &EvaluationContext) -> RuleEvaluation {
+        self.log.lock().expect("order log").push(self.label);
+        RuleEvaluation::new(Outcome::Satisfied, format!("from {}", self.label))
+    }
+}
+
+#[test]
+fn interpreter_executes_rules_in_ruleset_order() {
+    let order = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+
+    let rule_set = RuleSet::from_rules(vec![
+        Box::new(OrderRecordingRule::new(
+            "first",
+            std::sync::Arc::clone(&order),
+        )),
+        Box::new(OrderRecordingRule::new(
+            "second",
+            std::sync::Arc::clone(&order),
+        )),
+    ]);
+
+    let context = evaluation_context(
+        "alpha",
+        "alpha",
+        "claim-001",
+        "claim-001",
+        EvaluationOptions::default(),
+    );
+
+    let result = Interpreter::with_rule_set(rule_set).evaluate(&context);
+
+    let recorded = order.lock().expect("order log");
+    assert_eq!(*recorded, vec!["first", "second"]);
+    assert_eq!(result.outcome, Outcome::Satisfied);
+    assert_eq!(result.reasons, vec!["from second"]);
 }
