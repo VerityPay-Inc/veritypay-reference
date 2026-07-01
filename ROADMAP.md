@@ -147,11 +147,12 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Goal:** Run the **interpreter** against a minimal claim under the first executable rule set.
 
-**Prerequisite:** [ADR-0004](docs/adrs/0004-minimal-evaluation-semantics.md) — minimal evaluation semantics (Accepted).
+**Prerequisite:** [ADR-0004](docs/adrs/0004-minimal-evaluation-semantics.md) — minimal evaluation semantics (Accepted); [ADR-0005](docs/adrs/0005-evaluation-rule-architecture.md) — evaluation rule architecture (Accepted).
 
 **Outputs:**
 
 - [docs/adrs/0004-minimal-evaluation-semantics.md](docs/adrs/0004-minimal-evaluation-semantics.md) — ADR-0004: body-equality rule, `evaluate(context)` contract (Accepted)
+- [docs/adrs/0005-evaluation-rule-architecture.md](docs/adrs/0005-evaluation-rule-architecture.md) — ADR-0005: `EvaluationRule`, `MinimalBodyEqualityRule` (Accepted)
 - `Interpreter::evaluate(&EvaluationContext) -> VerificationResult` in `vp-reference-interpreter`
 - Fixture-driven unit tests per ADR-0004 outcome table
 
