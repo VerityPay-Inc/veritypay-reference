@@ -18,6 +18,7 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute to the reference interpreter |
 | [docs/adrs/README.md](docs/adrs/README.md) | Architecture Decision Records |
 | [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) | ADR-0001 — Implementation language (Rust) |
+| [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) | ADR-0002 — Cargo workspace architecture |
 | [LICENSE](LICENSE) | License terms for this repository |
 
 ---
