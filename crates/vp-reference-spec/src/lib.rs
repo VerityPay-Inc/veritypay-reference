@@ -1,5 +1,7 @@
-//! Specification input loading (placeholder until Milestone B).
+//! Specification input loading for the reference interpreter.
 
-pub mod spec_input;
+pub mod error;
+pub mod loader;
 
-pub use spec_input::SpecInput;
+pub use error::SpecLoadError;
+pub use loader::{LoadedSpecification, SpecificationLoadOptions, SpecificationLoader};

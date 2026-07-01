@@ -10,7 +10,12 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+vp-core = { path = "../../../veritypay-tooling/crates/vp-core" }
 vp-reference-core = { workspace = true }
+vp-spec-model = { path = "../../../veritypay-tooling/crates/vp-spec-model" }
+
+[dev-dependencies]
+tempfile = { workspace = true }
 
 [lints]
 workspace = true

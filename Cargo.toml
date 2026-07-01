@@ -46,6 +46,8 @@ vp-reference-spec = { path = "crates/vp-reference-spec" }
 vp-reference-model = { path = "crates/vp-reference-model" }
 vp-reference-interpreter = { path = "crates/vp-reference-interpreter" }
 vp-reference-report = { path = "crates/vp-reference-report" }
+clap = { version = "4", features = ["derive"] }
+tempfile = "3"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

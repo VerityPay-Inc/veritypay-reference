@@ -6,7 +6,7 @@ fn workspace_crates_are_linkable() {
     use vp_reference_interpreter::Interpreter;
     use vp_reference_model::{Claim, Evidence, Identifiers, Outcome, Trace, VerificationResult};
     use vp_reference_report::Report;
-    use vp_reference_spec::SpecInput;
+    use vp_reference_spec::{SpecificationLoadOptions, SpecificationLoader};
 
     let _ = (
         EvaluationContext::placeholder(),
@@ -20,6 +20,7 @@ fn workspace_crates_are_linkable() {
         Identifiers,
         Interpreter::placeholder(),
         Report::placeholder(),
-        SpecInput::placeholder(),
+        SpecificationLoader::new(),
+        SpecificationLoadOptions::new("."),
     );
 }

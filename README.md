@@ -4,7 +4,7 @@
 
 This repository is part of the **Verity Specification Platform**. It implements **readable reference semantics** for claims, evidence, and verification—so that protocol behavior can be studied, tested, and compared. It does **not** define protocol meaning.
 
-**Repository maturity:** **Workspace bootstrap** — Cargo workspace and crate boundaries per [ADR-0002](docs/adrs/0002-workspace-architecture.md); interpreter logic not yet implemented.
+**Repository maturity:** **Specification loading** — Cargo workspace per [ADR-0002](docs/adrs/0002-workspace-architecture.md); validated spec input loads through `vp-spec-model` (Milestone B). Claim parsing and verification not yet implemented.
 
 ---
 
@@ -174,6 +174,25 @@ Build and run:
 cargo build -p vp-reference-cli
 cargo run -p vp-reference-cli --bin vp-reference
 ```
+
+Load a validated `veritypay-spec` checkout (sibling layout assumed):
+
+```bash
+cargo run -p vp-reference-cli -- load-spec --spec ../veritypay-spec
+```
+
+Example output:
+
+```
+Specification loaded
+
+Terms: 40
+RFCs: 1
+Documents: 27
+References: 1305
+```
+
+This loads registries, documents, and the reference graph through [`vp-spec-model`](https://github.com/VerityPay-Inc/veritypay-tooling) and exposes a path-free `SpecificationContext` to downstream crates. It does not run tooling validators, parse claims, or evaluate verification logic.
 
 CI runs `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace`.
 

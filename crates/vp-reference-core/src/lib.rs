@@ -3,5 +3,5 @@
 pub mod context;
 pub mod error;
 
-pub use context::{EvaluationContext, SpecificationContext};
+pub use context::{EvaluationContext, SpecificationContext, SpecificationSummary};
 pub use error::ReferenceError;

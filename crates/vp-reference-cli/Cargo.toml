@@ -14,10 +14,7 @@ name = "vp-reference"
 path = "src/main.rs"
 
 [dependencies]
-vp-reference-core = { workspace = true }
-vp-reference-interpreter = { workspace = true }
-vp-reference-model = { workspace = true }
-vp-reference-report = { workspace = true }
+clap = { workspace = true }
 vp-reference-spec = { workspace = true }
 
 [lints]

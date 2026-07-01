@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **A — Repository scaffold** *(complete — documentation and Cargo workspace)*
+**Current milestone:** **B — Load specification model** *(complete)*
 
 ---
 
@@ -13,7 +13,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | Milestone | Name | Status |
 |-----------|------|--------|
 | **A** | Repository scaffold | **Complete** |
-| **B** | Load specification model | Not started |
+| **B** | Load specification model | **Complete** |
 | **C** | Parse minimal claim | Not started |
 | **D** | Evaluate minimal claim | Not started |
 | **E** | Produce verification outcome | Not started |
@@ -54,7 +54,6 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 **Not included:**
 
 - Claim or evidence parsing
-- Specification loading via `vp-spec-model` (Milestone B)
 - Verification outcomes or traces (Milestones E–F)
 - Changes to normative text in `veritypay-spec`
 
@@ -69,16 +68,17 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 **Outputs:**
 
 - [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) — ADR-0002 (Accepted)
-- Integration path to `vp-spec-model` (`RegistrySet`, `DocumentCorpus`, `ReferenceGraph`)
-- Specification context bound to a version or Edition pin
-- Fixture or test harness loading a validated `veritypay-spec` checkout
+- `vp-reference-spec`: `SpecificationLoader`, `SpecificationLoadOptions`, `LoadedSpecification` via `vp-spec-model`
+- `vp-reference-core`: path-free `SpecificationContext` with loaded summary counts
+- CLI: `vp-reference load-spec --spec <path>`
+- Fixture and optional sibling `veritypay-spec` integration tests
 
 **Success criteria:**
 
-- [ ] Can load registries and document corpus from a validated spec tree
-- [ ] Specification version or Edition identifier is recorded on the loaded context
-- [ ] Missing or invalid spec input fails with a clear error—not silent partial load
-- [ ] No duplicate registry or document parsing logic where `vp-spec-model` suffices
+- [x] Can load registries and document corpus from a validated spec tree
+- [x] Specification version or Edition identifier is recorded on the loaded context (optional `edition_id` / `protocol_version` pins)
+- [x] Missing or invalid spec input fails with a clear error—not silent partial load
+- [x] No duplicate registry or document parsing logic where `vp-spec-model` suffices
 
 **Not included:**
 
