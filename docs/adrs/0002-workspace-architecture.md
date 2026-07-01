@@ -68,7 +68,7 @@ Initial workspace members:
 | **`vp-reference-interpreter`** | Verification logic and evaluation flow |
 | **`vp-reference-report`** | Human and machine-readable reporting |
 
-**Composition rule:** The CLI resolves filesystem paths and invokes **`vp-reference-spec`** to load specification input. It then passes **`EvaluationContext`**, **`SpecificationContext`**, **`Claim`**, and **`Evidence`** to **`vp-reference-interpreter`**. The interpreter produces **`vp-reference-model`** outcomes and traces. **`vp-reference-report`** formats results—it does not alter verification semantics.
+**Composition rule:** The CLI resolves filesystem paths and invokes **`vp-reference-spec`** to load specification input. It assembles **`EvaluationContext`** ( **`SpecificationContext`**, **`Claim`**, **`Evidence`**, future **`EvaluationOptions`**) and calls **`vp-reference-interpreter::evaluate(context)`**. The interpreter produces **`VerificationResult`**, **`Outcome`**, and **`Trace`**. **`vp-reference-report`** formats results—it does not alter verification semantics.
 
 **Filesystem rule:** Only **`vp-reference-cli`** and **`vp-reference-spec`** touch paths, Edition manifest files, or `vp-spec-model` loading. **`vp-reference-interpreter`** is filesystem-agnostic so `veritypay-conformance` can invoke it as a library without the CLI.
 

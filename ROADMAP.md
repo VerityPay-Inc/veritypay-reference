@@ -14,7 +14,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 |-----------|------|--------|
 | **A** | Repository scaffold | **Complete** |
 | **B** | Load specification model | **Complete** |
-| **C** | Parse minimal claim | Not started |
+| **C** | Domain model and builders | Not started |
 | **D** | Evaluate minimal claim | Not started |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
@@ -88,31 +88,33 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 ---
 
-## Milestone C — Parse minimal claim
+## Milestone C — Domain model and builders
 
-**Goal:** Accept a **minimal claim** input suitable for first semantic evaluation.
+**Goal:** Establish **claim** and **evidence** domain types—with **identity separated from content**—and **builders** for readable fixtures before parsing or evaluation.
 
-**Prerequisite:** [ADR-0003](docs/adrs/0003-domain-model-architecture.md) — domain model architecture (Accepted).
+**Prerequisite:** [ADR-0003](docs/adrs/0003-domain-model-architecture.md) — domain model architecture (Accepted, v1.1.0).
 
 **Outputs:**
 
-- [docs/adrs/0003-domain-model-architecture.md](docs/adrs/0003-domain-model-architecture.md) — ADR-0003: domain model pyramid (Accepted)
-- Claim input component per [ARCHITECTURE.md](ARCHITECTURE.md)
-- Minimal claim fixture format aligned with [DATA_MODEL](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/01-architecture/DATA_MODEL.md) (smallest viable subset)
-- Parse errors surfaced before evaluation
+- [docs/adrs/0003-domain-model-architecture.md](docs/adrs/0003-domain-model-architecture.md) — ADR-0003: domain pyramid, `EvaluationContext`, builders (Accepted)
+- `Claim`, `Assertion`, `Evidence`, `EvidenceContent` in `vp-reference-model`
+- `ClaimBuilder`, `EvidenceBuilder`, `VerificationResultBuilder`, `TraceBuilder`
+- `EvaluationContext` in `vp-reference-core` (spec + claim + evidence; options stub)
+- Unit tests constructing evaluation inputs via builders
 
 **Success criteria:**
 
-- [ ] A documented minimal claim fixture parses successfully
-- [ ] Malformed claim input fails with actionable parse errors
-- [ ] Parsed claim is bound to the loaded specification context
-- [ ] No normative claim fields invented beyond accepted spec documents
+- [ ] Domain types match ADR-0003 identity/content split
+- [ ] Builders construct minimal claim and evidence fixtures without sprawling struct literals
+- [ ] `EvaluationContext` bundles specification, claim, and evidence for a single evaluation
+- [ ] No normative claim or evidence fields invented beyond accepted spec documents
+- [ ] No file or JSON parsers required for this milestone phase
 
 **Not included:**
 
-- Full claim type coverage
-- Evidence parsing beyond stubs (may pair with Milestone C fixtures)
+- Claim or evidence **parsing** (follow-on within Milestone C or early Milestone D)
 - Verification logic (Milestone D)
+- Full claim type coverage
 - Network or file watchers for live claim intake
 
 ---
