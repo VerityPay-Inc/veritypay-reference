@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **A — Repository scaffold** *(complete when this document and sibling scaffold files are merged)*
+**Current milestone:** **A — Repository scaffold** *(complete — documentation and Cargo workspace)*
 
 ---
 
@@ -12,7 +12,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 
 | Milestone | Name | Status |
 |-----------|------|--------|
-| **A** | Repository scaffold | **Complete** (documentation) |
+| **A** | Repository scaffold | **Complete** |
 | **B** | Load specification model | Not started |
 | **C** | Parse minimal claim | Not started |
 | **D** | Evaluate minimal claim | Not started |
@@ -35,7 +35,11 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 - [ROADMAP.md](ROADMAP.md) — this document with milestones A–G
 - [CONTRIBUTING.md](CONTRIBUTING.md) — contributor expectations and specification boundary
 - [LICENSE](LICENSE) — license terms
-- Repository maturity declared: **Scaffold**
+- [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) — ADR-0001: Rust (Accepted)
+- [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) — ADR-0002: Cargo workspace (Accepted)
+- Cargo workspace per ADR-0002 (`vp-reference-*` crates)
+- `.github/workflows/ci.yml` — fmt, clippy, test
+- Repository maturity declared: **Workspace bootstrap**
 
 **Success criteria:**
 
@@ -43,15 +47,15 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 - [x] Dependency on `veritypay-spec` is explicit and one-directional
 - [x] Relationship to `veritypay-tooling` and `vp-spec-model` is documented
 - [x] Milestones B–G each define goal, outputs, success criteria, and not-included scope
-- [x] No interpreter code merged under the pretense of "early MVP"
+- [x] No interpreter logic merged under the pretense of "early MVP"
+- [x] Cargo workspace compiles; crate boundaries match ADR-0002
+- [x] CI runs fmt, clippy, and tests
 
 **Not included:**
 
-- Interpreter source code
-- Claim or evidence parsers
-- Dependency on `vp-spec-model` (deferred to Milestone B)
-- CI workflows or GitHub Actions
-- Language, framework, or package manager choice (deferred to ADR at Milestone B)
+- Claim or evidence parsing
+- Specification loading via `vp-spec-model` (Milestone B)
+- Verification outcomes or traces (Milestones E–F)
 - Changes to normative text in `veritypay-spec`
 
 ---
@@ -64,7 +68,7 @@ Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and *
 
 **Outputs:**
 
-- [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) — ADR-0001: Rust (Accepted)
+- [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) — ADR-0002 (Accepted)
 - Integration path to `vp-spec-model` (`RegistrySet`, `DocumentCorpus`, `ReferenceGraph`)
 - Specification context bound to a version or Edition pin
 - Fixture or test harness loading a validated `veritypay-spec` checkout

@@ -1,0 +1,16 @@
+[package]
+name = "vp-reference-spec"
+description = "Specification input loading for the VerityPay reference interpreter"
+publish = false
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+vp-reference-core = { workspace = true }
+
+[lints]
+workspace = true

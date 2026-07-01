@@ -1,0 +1,24 @@
+[package]
+name = "vp-reference-cli"
+description = "CLI for the VerityPay reference interpreter"
+publish = false
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "vp-reference"
+path = "src/main.rs"
+
+[dependencies]
+vp-reference-core = { workspace = true }
+vp-reference-interpreter = { workspace = true }
+vp-reference-model = { workspace = true }
+vp-reference-report = { workspace = true }
+vp-reference-spec = { workspace = true }
+
+[lints]
+workspace = true

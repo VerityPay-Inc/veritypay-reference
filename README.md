@@ -4,7 +4,7 @@
 
 This repository is part of the **Verity Specification Platform**. It implements **readable reference semantics** for claims, evidence, and verification—so that protocol behavior can be studied, tested, and compared. It does **not** define protocol meaning.
 
-**Repository maturity:** **Scaffold** — purpose, architecture, roadmap, and contribution rules are documented; interpreter logic not yet implemented.
+**Repository maturity:** **Workspace bootstrap** — Cargo workspace and crate boundaries per [ADR-0002](docs/adrs/0002-workspace-architecture.md); interpreter logic not yet implemented.
 
 ---
 
@@ -139,6 +139,43 @@ Capabilities are delivered **capability-based** per [ROADMAP.md](ROADMAP.md)—n
 | Conformance integration | Hooks for VP-CS runners | G |
 
 Long-term structure: [ARCHITECTURE.md](ARCHITECTURE.md).
+
+---
+
+## Repository layout
+
+```
+veritypay-reference/
+├── Cargo.toml                 ← Workspace manifest
+├── rust-toolchain.toml        ← Pinned stable Rust
+├── rustfmt.toml
+├── README.md                  ← You are here
+├── ARCHITECTURE.md
+├── ROADMAP.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── .github/workflows/ci.yml   ← fmt, clippy, test
+├── docs/
+│   └── adrs/
+├── crates/
+│   ├── vp-reference-cli/      ← `vp-reference` binary
+│   ├── vp-reference-core/     ← contexts, errors, contracts
+│   ├── vp-reference-spec/     ← specification input (Milestone B)
+│   ├── vp-reference-model/    ← pure domain types
+│   ├── vp-reference-interpreter/ ← verification logic (Milestone D+)
+│   └── vp-reference-report/   ← human and JSON output (Milestone F+)
+├── src/lib.rs                 ← workspace root (integration tests)
+└── tests/                     ← workspace integration tests
+```
+
+Build and run:
+
+```bash
+cargo build -p vp-reference-cli
+cargo run -p vp-reference-cli --bin vp-reference
+```
+
+CI runs `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace`.
 
 ---
 

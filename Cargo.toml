@@ -1,0 +1,54 @@
+[workspace]
+resolver = "2"
+members = [
+    ".",
+    "crates/vp-reference-cli",
+    "crates/vp-reference-core",
+    "crates/vp-reference-spec",
+    "crates/vp-reference-model",
+    "crates/vp-reference-interpreter",
+    "crates/vp-reference-report",
+]
+
+[package]
+name = "veritypay-reference"
+description = "VerityPay reference interpreter workspace"
+publish = false
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dev-dependencies]
+vp-reference-core = { workspace = true }
+vp-reference-interpreter = { workspace = true }
+vp-reference-model = { workspace = true }
+vp-reference-report = { workspace = true }
+vp-reference-spec = { workspace = true }
+
+[lints]
+workspace = true
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["VerityPay Core Team"]
+repository = "https://github.com/VerityPay-Inc/veritypay-reference"
+rust-version = "1.85"
+
+[workspace.dependencies]
+vp-reference-cli = { path = "crates/vp-reference-cli" }
+vp-reference-core = { path = "crates/vp-reference-core" }
+vp-reference-spec = { path = "crates/vp-reference-spec" }
+vp-reference-model = { path = "crates/vp-reference-model" }
+vp-reference-interpreter = { path = "crates/vp-reference-interpreter" }
+vp-reference-report = { path = "crates/vp-reference-report" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
