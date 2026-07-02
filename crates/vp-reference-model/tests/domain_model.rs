@@ -1,9 +1,9 @@
 //! Domain model integration tests (Milestone C.1).
 
 use vp_reference_model::{
-    Assertion, Claim, ClaimBuilder, Evidence, EvidenceBuilder, EvidenceContent, Metadata, Outcome,
-    SpecificationBinding, Trace, TraceBuilder, TraceEvent, VerificationResult,
-    VerificationResultBuilder,
+    Assertion, Claim, ClaimBuilder, EvaluationPolicy, Evidence, EvidenceBuilder, EvidenceContent,
+    EvidenceSet, Metadata, Outcome, SpecificationBinding, Trace, TraceBuilder, TraceEvent,
+    VerificationResult, VerificationResultBuilder,
 };
 
 #[test]
@@ -141,6 +141,8 @@ fn public_domain_types_avoid_filesystem_types() {
 
     assert_no_path_field::<Claim>();
     assert_no_path_field::<Evidence>();
+    assert_no_path_field::<EvidenceSet>();
+    assert_no_path_field::<EvaluationPolicy>();
     assert_no_path_field::<Assertion>();
     assert_no_path_field::<EvidenceContent>();
     assert_no_path_field::<Outcome>();

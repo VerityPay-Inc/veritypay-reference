@@ -43,7 +43,9 @@ The interpreter **follows** the specification. It never **defines** it.
 
 **Public contract** ([ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md)): `EvaluationContext` → `Interpreter::evaluate` → `VerificationResult`. Downstream consumers (CLI, reports, conformance) should depend on this call shape—not internal rule implementations.
 
-The first implemented protocol rules for **Platform 1.0** are **VP-RULE-0002** (*Evidence Claim Binding*) and **VP-RULE-0001** (*Assertion Body Evidence Match*) from [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) ([VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md), [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md)).
+The first implemented protocol rules for **Platform 1.1** are **VP-RULE-0002** (*Evidence Claim Binding*) and **VP-RULE-0001** (*Assertion Body Evidence Match*) from [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) ([VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md), [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md)).
+
+**Platform 1.2** ([VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md), [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md)) is **accepted in the specification**. This repository provides **domain model groundwork** — `EvidenceSet` and `EvaluationPolicy` — plus future-facing `EvaluationInput`. Multi-evidence interpreter execution remains **deferred**; the public contract still uses singular `EvaluationContext.evidence`.
 
 ---
 
@@ -139,6 +141,7 @@ Capabilities are delivered **capability-based** per [ROADMAP.md](ROADMAP.md)—n
 | Load specification model | Consume typed spec via `vp-spec-model` | B |
 | Parse minimal claim | Accept a minimal claim input | C |
 | Evaluate minimal claim | Run interpreter against loaded spec | D |
+| Platform 1.2 model groundwork | `EvidenceSet`, `EvaluationPolicy`, `EvaluationInput` | D.5 |
 | Produce verification outcome | `satisfied` / `not_satisfied` / `indeterminate` | E |
 | Produce trace | Explainable evaluation steps | F |
 | Conformance integration | Hooks for VP-CS runners | G |
@@ -220,6 +223,7 @@ CI runs `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warni
 | Specification home | [veritypay-spec](https://github.com/VerityPay-Inc/veritypay-spec) |
 | Conformance model | [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md) |
 | Phase II platform plan | [PHASE_II_PLATFORM_PLAN.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) |
+| Platform releases | [PLATFORM_RELEASES.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/PLATFORM_RELEASES.md) |
 | Specification tooling | [veritypay-tooling](https://github.com/VerityPay-Inc/veritypay-tooling) |
 | Specification model | [SPECIFICATION_MODEL.md](https://github.com/VerityPay-Inc/veritypay-tooling/blob/main/docs/SPECIFICATION_MODEL.md) |
 | VP-TERM: Reference Interpreter | [GLOSSARY — VP-TERM-027](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/00-overview/GLOSSARY.md#reference-interpreter) |

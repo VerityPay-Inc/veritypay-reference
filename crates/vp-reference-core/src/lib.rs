@@ -3,6 +3,7 @@
 pub mod context;
 pub mod context_error;
 pub mod error;
+pub mod evaluation_input;
 
 pub use context::{
     EvaluationContext, EvaluationContextBuilder, EvaluationOptions, SpecificationContext,
@@ -10,3 +11,4 @@ pub use context::{
 };
 pub use context_error::ContextBuildError;
 pub use error::ReferenceError;
+pub use evaluation_input::{EvaluationInput, EvaluationInputBuilder};

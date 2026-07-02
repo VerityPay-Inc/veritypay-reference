@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **D — Evaluate minimal claim** *(complete)*
+**Current milestone:** **D.5 — Platform 1.2 model groundwork** *(complete)*
 
 ---
 
@@ -16,6 +16,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **B** | Load specification model | **Complete** |
 | **C** | Domain model and builders | **Complete** |
 | **D** | Evaluate minimal claim | **Complete** |
+| **D.5** | Platform 1.2 model groundwork | **Complete** |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
 | **G** | Conformance integration | Not started |
@@ -225,6 +226,34 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 - VP-RFC-0002 acceptance in spec
 - Conformance harness **VP-CS-0002** execution (Milestone G.5)
 - VP-RULE registry publication
+
+**Milestone status:** **Complete**.
+
+---
+
+## Milestone D.5 — Platform 1.2 model groundwork
+
+**Goal:** Add domain support for **Evidence Set** and **Evaluation Policy** per accepted [VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md) and [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md) without changing public interpreter behavior.
+
+**Prerequisite:** Platform 1.2 accepted in `veritypay-spec`; Milestone D.4 **VP-RULE-0002** (complete).
+
+**Outputs:**
+
+- `EvidenceSet` and `EvidenceSetBuilder` in `vp-reference-model`
+- `EvaluationPolicy::AllRequired` with canonical label `ALL_REQUIRED`
+- Future-facing `EvaluationInput` in `vp-reference-core` (not consumed by `Interpreter::evaluate`)
+
+**Success criteria:**
+
+- [x] Empty and multi-envelope `EvidenceSet` construction with order preserved for accessors
+- [x] `EvaluationPolicy::AllRequired` policy id is `ALL_REQUIRED`
+- [x] `EvaluationContext` API unchanged; **VP-CS-0001** and **VP-CS-0002** interpreter tests still pass
+- [x] No multi-evidence execution, aggregation logic, fixtures, CLI, or report changes
+
+**Not included:**
+
+- Per-envelope rule loop and `ALL_REQUIRED` aggregation in the interpreter
+- **VP-CS-0003** / **VP-CS-0004** fixtures or conformance paths
 
 **Milestone status:** **Complete**.
 
