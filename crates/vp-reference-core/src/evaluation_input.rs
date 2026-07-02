@@ -1,14 +1,14 @@
-//! Future-facing evaluation input for Platform 1.2 multi-evidence semantics.
+//! Multi-evidence evaluation input for Platform 1.2 semantics (VP-RFC-0003, VP-RFC-0004).
 //!
-//! The public interpreter contract remains [`EvaluationContext`] and `Interpreter::evaluate`.
-//! This type holds [`EvidenceSet`] and [`EvaluationPolicy`] for upcoming execution paths.
+//! The Platform 1.1 public contract remains [`EvaluationContext`] and `Interpreter::evaluate`.
+//! [`EvaluationInput`] is consumed by `Interpreter::evaluate_input` for multi-evidence paths.
 
 use vp_reference_model::{Claim, EvaluationPolicy, EvidenceSet};
 
 use crate::context::{EvaluationOptions, SpecificationContext};
 use crate::context_error::ContextBuildError;
 
-/// Path-free input bundle for multi-evidence evaluation (not yet consumed by the interpreter).
+/// Path-free input bundle for multi-evidence evaluation.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EvaluationInput {
     pub specification: SpecificationContext,

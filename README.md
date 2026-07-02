@@ -41,11 +41,11 @@ It is **readable code that executes the behavior defined by [`veritypay-spec`](h
 
 The interpreter **follows** the specification. It never **defines** it.
 
-**Public contract** ([ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md)): `EvaluationContext` → `Interpreter::evaluate` → `VerificationResult`. Downstream consumers (CLI, reports, conformance) should depend on this call shape—not internal rule implementations.
+**Public contract** ([ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md)): `EvaluationContext` → `Interpreter::evaluate` → `VerificationResult` for Platform 1.1 single-evidence evaluation. Platform 1.2 multi-evidence evaluation uses `EvaluationInput` → `Interpreter::evaluate_input` → `VerificationResult`. Both entrypoints are supported; `evaluate` is unchanged.
 
 The first implemented protocol rules for **Platform 1.1** are **VP-RULE-0002** (*Evidence Claim Binding*) and **VP-RULE-0001** (*Assertion Body Evidence Match*) from [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) ([VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md), [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md)).
 
-**Platform 1.2** ([VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md), [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md)) is **accepted in the specification**. This repository provides **domain model groundwork** — `EvidenceSet` and `EvaluationPolicy` — plus future-facing `EvaluationInput`. Multi-evidence interpreter execution remains **deferred**; the public contract still uses singular `EvaluationContext.evidence`.
+**Platform 1.2** ([VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md), [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md)) is **accepted in the specification**. This repository implements **`ALL_REQUIRED`** multi-evidence execution via `Interpreter::evaluate_input`. The Platform 1.1 `EvaluationContext` contract remains supported unchanged.
 
 ---
 
@@ -142,6 +142,7 @@ Capabilities are delivered **capability-based** per [ROADMAP.md](ROADMAP.md)—n
 | Parse minimal claim | Accept a minimal claim input | C |
 | Evaluate minimal claim | Run interpreter against loaded spec | D |
 | Platform 1.2 model groundwork | `EvidenceSet`, `EvaluationPolicy`, `EvaluationInput` | D.5 |
+| Platform 1.2 multi-evidence execution | `Interpreter::evaluate_input`, `ALL_REQUIRED` aggregation | D.6 |
 | Produce verification outcome | `satisfied` / `not_satisfied` / `indeterminate` | E |
 | Produce trace | Explainable evaluation steps | F |
 | Conformance integration | Hooks for VP-CS runners | G |

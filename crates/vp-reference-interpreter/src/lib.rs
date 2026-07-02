@@ -1,5 +1,6 @@
 //! Verification logic and evaluation flow for the reference interpreter.
 
+pub mod evaluation_policy;
 pub mod interpreter;
 pub mod rule;
 pub mod rule_evaluation;

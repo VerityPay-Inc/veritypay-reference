@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **D.5 — Platform 1.2 model groundwork** *(complete)*
+**Current milestone:** **D.6 — Platform 1.2 multi-evidence execution** *(complete)*
 
 ---
 
@@ -17,6 +17,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **C** | Domain model and builders | **Complete** |
 | **D** | Evaluate minimal claim | **Complete** |
 | **D.5** | Platform 1.2 model groundwork | **Complete** |
+| **D.6** | Platform 1.2 multi-evidence execution | **Complete** |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
 | **G** | Conformance integration | Not started |
@@ -241,19 +242,47 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 - `EvidenceSet` and `EvidenceSetBuilder` in `vp-reference-model`
 - `EvaluationPolicy::AllRequired` with canonical label `ALL_REQUIRED`
-- Future-facing `EvaluationInput` in `vp-reference-core` (not consumed by `Interpreter::evaluate`)
+- Future-facing `EvaluationInput` in `vp-reference-core`
 
 **Success criteria:**
 
 - [x] Empty and multi-envelope `EvidenceSet` construction with order preserved for accessors
 - [x] `EvaluationPolicy::AllRequired` policy id is `ALL_REQUIRED`
 - [x] `EvaluationContext` API unchanged; **VP-CS-0001** and **VP-CS-0002** interpreter tests still pass
-- [x] No multi-evidence execution, aggregation logic, fixtures, CLI, or report changes
+- [x] Domain types only — execution deferred to Milestone D.6
 
 **Not included:**
 
 - Per-envelope rule loop and `ALL_REQUIRED` aggregation in the interpreter
 - **VP-CS-0003** / **VP-CS-0004** fixtures or conformance paths
+
+**Milestone status:** **Complete**.
+
+---
+
+## Milestone D.6 — Platform 1.2 multi-evidence execution
+
+**Goal:** Execute multi-evidence evaluation with **`ALL_REQUIRED`** aggregation per accepted [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md) without breaking the Platform 1.1 `EvaluationContext` contract.
+
+**Prerequisite:** Milestone D.5 model groundwork (complete); Platform 1.2 accepted in `veritypay-spec`.
+
+**Outputs:**
+
+- `Interpreter::evaluate_input(&EvaluationInput) -> VerificationResult`
+- Per-envelope evaluation via existing `RuleSet::platform_1()` pipeline (VP-RULE-0002 → VP-RULE-0001)
+- `ALL_REQUIRED` outcome aggregation with trace events per evidence index/id
+
+**Success criteria:**
+
+- [x] Empty, single, and multi-evidence `ALL_REQUIRED` outcomes match VP-RFC-0004 table
+- [x] Aggregated outcome is independent of evidence insertion order
+- [x] `Interpreter::evaluate(&EvaluationContext)` unchanged; **VP-CS-0001** / **VP-CS-0002** tests pass
+- [x] Single-envelope `evaluate_input` outcome matches `evaluate` for the same inputs
+
+**Not included:**
+
+- **VP-CS-0003** / **VP-CS-0004** fixtures or conformance wiring
+- CLI, report, or new protocol rule changes
 
 **Milestone status:** **Complete**.
 
