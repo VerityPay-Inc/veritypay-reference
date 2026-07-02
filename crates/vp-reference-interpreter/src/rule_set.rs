@@ -3,7 +3,7 @@
 use std::fmt;
 
 use crate::rule::EvaluationRule;
-use crate::rules::VpRule0001;
+use crate::rules::{VpRule0001, VpRule0002};
 
 /// Owns a deterministic, ordered sequence of [`EvaluationRule`] implementations.
 pub struct RuleSet {
@@ -19,10 +19,10 @@ impl fmt::Debug for RuleSet {
 }
 
 impl RuleSet {
-    /// Milestone D rule set: [`VpRule0001`] only.
+    /// Platform 1.0 rule set: [`VpRule0002`] then [`VpRule0001`].
     #[must_use]
-    pub fn milestone_d() -> Self {
-        Self::from_rules(vec![Box::new(VpRule0001)])
+    pub fn platform_1() -> Self {
+        Self::from_rules(vec![Box::new(VpRule0002), Box::new(VpRule0001)])
     }
 
     #[must_use]
@@ -48,6 +48,6 @@ impl RuleSet {
 
 impl Default for RuleSet {
     fn default() -> Self {
-        Self::milestone_d()
+        Self::platform_1()
     }
 }

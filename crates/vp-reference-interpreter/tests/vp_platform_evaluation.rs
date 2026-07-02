@@ -1,10 +1,11 @@
-//! VP-RULE-0001 interpreter evaluation tests (Milestone D.3 / VP-RFC-0001).
+//! Platform 1.0 interpreter evaluation tests (VP-RULE-0002 + VP-RULE-0001 / VP-RFC-0002).
 
 use vp_reference_core::{
     EvaluationContext, EvaluationOptions, SpecificationContext, SpecificationSummary,
 };
 use vp_reference_interpreter::{
-    EvaluationRule, Interpreter, RuleEvaluation, RuleSet, VpRule0001, VP_RULE_0001_REFERENCE,
+    EvaluationRule, Interpreter, RuleEvaluation, RuleSet, VpRule0001, VpRule0002,
+    VP_RULE_0001_REFERENCE, VP_RULE_0002_REFERENCE,
 };
 use vp_reference_model::{
     Assertion, ClaimBuilder, EvidenceBuilder, EvidenceContent, Outcome, SpecificationBinding,
@@ -50,7 +51,7 @@ fn evaluation_context(
 }
 
 #[test]
-fn fixture_alpha_alpha_matching_claim_id_is_satisfied() {
+fn matching_ids_proceed_to_vp_rule_0001_and_yield_satisfied() {
     let context = evaluation_context(
         "alpha",
         "alpha",
@@ -68,6 +69,10 @@ fn fixture_alpha_alpha_matching_claim_id_is_satisfied() {
         SpecificationBinding::new()
             .with_edition_id("2026-01")
             .with_protocol_version("0.1.0")
+    );
+    assert_eq!(
+        result.reasons,
+        vec!["Assertion body matches evidence body (VP-RULE-0001)"]
     );
 }
 
@@ -99,21 +104,91 @@ fn fixture_alpha_empty_evidence_body_is_indeterminate() {
     let result = Interpreter::new().evaluate(&context);
 
     assert_eq!(result.outcome, Outcome::Indeterminate);
+    assert!(
+        result.reasons[0].contains(VP_RULE_0001_REFERENCE),
+        "expected VP-RULE-0001 reason, got {:?}",
+        result.reasons
+    );
 }
 
 #[test]
-fn fixture_mismatched_evidence_claim_id_is_indeterminate() {
+fn mismatched_claim_ids_short_circuit_to_indeterminate() {
     let context = evaluation_context(
         "alpha",
         "alpha",
         "claim-001",
-        "claim-002",
+        "claim-999",
         EvaluationOptions::default(),
     );
 
     let result = Interpreter::new().evaluate(&context);
 
     assert_eq!(result.outcome, Outcome::Indeterminate);
+    assert_eq!(
+        result.reasons,
+        vec!["Evidence claim id does not match claim id (VP-RULE-0002)"]
+    );
+}
+
+#[test]
+fn empty_claim_id_is_indeterminate_via_vp_rule_0002() {
+    let context = evaluation_context(
+        "alpha",
+        "alpha",
+        "",
+        "claim-001",
+        EvaluationOptions::default(),
+    );
+
+    let result = Interpreter::new().evaluate(&context);
+
+    assert_eq!(result.outcome, Outcome::Indeterminate);
+    assert_eq!(result.reasons, vec!["Claim id is empty (VP-RULE-0002)"]);
+}
+
+#[test]
+fn empty_evidence_claim_id_is_indeterminate_via_vp_rule_0002() {
+    let context = evaluation_context(
+        "alpha",
+        "alpha",
+        "claim-001",
+        "",
+        EvaluationOptions::default(),
+    );
+
+    let result = Interpreter::new().evaluate(&context);
+
+    assert_eq!(result.outcome, Outcome::Indeterminate);
+    assert_eq!(
+        result.reasons,
+        vec!["Evidence claim id is empty (VP-RULE-0002)"]
+    );
+}
+
+#[test]
+fn vp_rule_0001_not_executed_after_binding_mismatch() {
+    let context = evaluation_context(
+        "alpha",
+        "beta",
+        "claim-001",
+        "claim-999",
+        EvaluationOptions {
+            deterministic: true,
+            trace_enabled: true,
+        },
+    );
+
+    let result = Interpreter::new().evaluate(&context);
+
+    assert_eq!(result.outcome, Outcome::Indeterminate);
+    assert!(
+        result.trace.events().iter().all(|event| event
+            .rule_reference
+            .as_ref()
+            .map(|reference| reference.as_str())
+            != Some(VP_RULE_0001_REFERENCE)),
+        "VP-RULE-0001 must not appear in trace after binding failure"
+    );
 }
 
 #[test]
@@ -136,7 +211,7 @@ fn trace_disabled_returns_empty_trace() {
 }
 
 #[test]
-fn deterministic_trace_ids_are_stable() {
+fn deterministic_trace_ordering_for_platform_1_success_path() {
     let context = evaluation_context(
         "alpha",
         "alpha",
@@ -165,13 +240,54 @@ fn deterministic_trace_ids_are_stable() {
         .map(|event| event.id.as_str().to_owned())
         .collect();
 
-    assert_eq!(first_ids, vec!["evt-1", "evt-2", "evt-3"]);
+    assert_eq!(first_ids, vec!["evt-1", "evt-2", "evt-3", "evt-4"]);
     assert_eq!(first_ids, second_ids);
 
-    let rule_event = &first.trace.events()[1];
     assert_eq!(
-        rule_event.rule_reference.as_ref().map(|r| r.as_str()),
+        first.trace.events()[1]
+            .rule_reference
+            .as_ref()
+            .map(|reference| reference.as_str()),
+        Some(VP_RULE_0002_REFERENCE)
+    );
+    assert_eq!(
+        first.trace.events()[2]
+            .rule_reference
+            .as_ref()
+            .map(|reference| reference.as_str()),
         Some(VP_RULE_0001_REFERENCE)
+    );
+}
+
+#[test]
+fn deterministic_trace_ordering_for_binding_short_circuit() {
+    let context = evaluation_context(
+        "alpha",
+        "alpha",
+        "claim-001",
+        "claim-999",
+        EvaluationOptions {
+            deterministic: true,
+            trace_enabled: true,
+        },
+    );
+
+    let result = Interpreter::new().evaluate(&context);
+
+    let event_ids: Vec<_> = result
+        .trace
+        .events()
+        .iter()
+        .map(|event| event.id.as_str().to_owned())
+        .collect();
+
+    assert_eq!(event_ids, vec!["evt-1", "evt-2", "evt-3"]);
+    assert_eq!(
+        result.trace.events()[1]
+            .rule_reference
+            .as_ref()
+            .map(|reference| reference.as_str()),
+        Some(VP_RULE_0002_REFERENCE)
     );
 }
 
@@ -203,21 +319,23 @@ fn vp_rule_0001_evaluates_independently() {
 }
 
 #[test]
-fn verification_result_includes_reason() {
+fn vp_rule_0002_evaluates_independently() {
     let context = evaluation_context(
         "alpha",
         "alpha",
         "claim-001",
-        "claim-001",
+        "claim-999",
         EvaluationOptions::default(),
     );
 
-    let result = Interpreter::new().evaluate(&context);
+    let evaluation = VpRule0002.evaluate(&context);
 
+    assert_eq!(evaluation.outcome, Outcome::Indeterminate);
     assert_eq!(
-        result.reasons,
-        vec!["Assertion body matches evidence body (VP-RULE-0001)"]
+        evaluation.rule_reference.as_ref().map(|r| r.as_str()),
+        Some(VP_RULE_0002_REFERENCE)
     );
+    assert!(!evaluation.continues);
 }
 
 struct OrderRecordingRule {
@@ -234,7 +352,12 @@ impl OrderRecordingRule {
 impl EvaluationRule for OrderRecordingRule {
     fn evaluate(&self, _context: &EvaluationContext) -> RuleEvaluation {
         self.log.lock().expect("order log").push(self.label);
-        RuleEvaluation::new(Outcome::Satisfied, format!("from {}", self.label))
+        let mut evaluation =
+            RuleEvaluation::new(Outcome::Satisfied, format!("from {}", self.label));
+        if self.label == "first" {
+            evaluation = evaluation.with_continues(true);
+        }
+        evaluation
     }
 }
 
@@ -267,4 +390,11 @@ fn interpreter_executes_rules_in_ruleset_order() {
     assert_eq!(*recorded, vec!["first", "second"]);
     assert_eq!(result.outcome, Outcome::Satisfied);
     assert_eq!(result.reasons, vec!["from second"]);
+}
+
+#[test]
+fn platform_1_ruleset_contains_vp_rule_0002_then_vp_rule_0001() {
+    let rule_set = RuleSet::platform_1();
+
+    assert_eq!(rule_set.len(), 2);
 }

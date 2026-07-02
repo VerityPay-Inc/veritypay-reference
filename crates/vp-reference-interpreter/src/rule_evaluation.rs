@@ -9,6 +9,8 @@ pub struct RuleEvaluation {
     pub reason: String,
     pub rule_reference: Option<RuleReference>,
     pub trace_events: Vec<TraceEvent>,
+    /// When true, the orchestrator continues to the next rule without treating this outcome as final.
+    pub continues: bool,
 }
 
 impl RuleEvaluation {
@@ -19,7 +21,14 @@ impl RuleEvaluation {
             reason: reason.into(),
             rule_reference: None,
             trace_events: Vec::new(),
+            continues: false,
         }
+    }
+
+    #[must_use]
+    pub fn with_continues(mut self, continues: bool) -> Self {
+        self.continues = continues;
+        self
     }
 
     #[must_use]

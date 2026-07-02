@@ -8,7 +8,13 @@ use vp_reference_model::{
 
 use crate::rule_evaluation::RuleEvaluation;
 use crate::rule_set::RuleSet;
-use crate::rules::VP_RULE_0001_REFERENCE;
+
+/// Ordered rule evaluations produced by one interpreter invocation.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct RuleSetRun {
+    evaluations: Vec<RuleEvaluation>,
+    final_evaluation: RuleEvaluation,
+}
 
 /// Reference interpreter — orchestrates evaluation rules per ADR-0005 and ADR-0006.
 #[derive(Debug)]
@@ -25,7 +31,7 @@ impl Default for Interpreter {
 impl Interpreter {
     #[must_use]
     pub fn new() -> Self {
-        Self::with_rule_set(RuleSet::milestone_d())
+        Self::with_rule_set(RuleSet::platform_1())
     }
 
     #[must_use]
@@ -47,29 +53,37 @@ impl Interpreter {
     /// Evaluates the given context through the configured rule set.
     #[must_use]
     pub fn evaluate(&self, context: &EvaluationContext) -> VerificationResult {
-        let rule_evaluation = self.evaluate_rules(context);
+        let run = self.evaluate_rules(context);
         let trace = if context.options().trace_enabled {
-            build_trace(context, &rule_evaluation)
+            build_trace(context, &run)
         } else {
             Trace::default()
         };
 
-        build_verification_result(context, &rule_evaluation, trace)
+        build_verification_result(context, &run.final_evaluation, trace)
     }
 
-    fn evaluate_rules(&self, context: &EvaluationContext) -> RuleEvaluation {
-        let mut evaluations = self
-            .rule_set
-            .rules()
-            .iter()
-            .map(|rule| rule.evaluate(context));
+    fn evaluate_rules(&self, context: &EvaluationContext) -> RuleSetRun {
+        let mut evaluations = Vec::new();
 
-        let first = evaluations
-            .next()
+        for rule in self.rule_set.rules() {
+            let evaluation = rule.evaluate(context);
+            let continues = evaluation.continues;
+            evaluations.push(evaluation);
+            if !continues {
+                break;
+            }
+        }
+
+        let final_evaluation = evaluations
+            .last()
+            .cloned()
             .expect("rule set must contain at least one rule");
 
-        // Milestone D aggregation: single rule pass-through; last rule wins when multiple exist.
-        evaluations.fold(first, |_, next| next)
+        RuleSetRun {
+            evaluations,
+            final_evaluation,
+        }
     }
 }
 
@@ -95,28 +109,39 @@ fn build_verification_result(
         .expect("interpreter sets required verification result fields")
 }
 
-fn build_trace(context: &EvaluationContext, rule_evaluation: &RuleEvaluation) -> Trace {
+fn build_trace(context: &EvaluationContext, run: &RuleSetRun) -> Trace {
     let claim_id = context.claim().id.as_str();
-    let outcome_label = rule_evaluation.outcome.as_str();
+    let outcome_label = run.final_evaluation.outcome.as_str();
 
-    let builder = TraceBuilder::new()
+    let mut builder = TraceBuilder::new().message(
+        event_id(1),
+        format!("evaluation started for claim {claim_id}"),
+    );
+
+    let mut sequence = 2_u32;
+    for evaluation in &run.evaluations {
+        if let Some(rule_reference) = evaluation.rule_reference.as_ref() {
+            builder = builder.event(
+                TraceEvent::new(
+                    event_id(sequence),
+                    format!("applied rule {}", rule_reference.as_str()),
+                )
+                .with_rule_reference(rule_reference.as_str()),
+            );
+            sequence += 1;
+        }
+
+        if !evaluation.continues {
+            break;
+        }
+    }
+
+    builder
         .message(
-            event_id(1),
-            format!("evaluation started for claim {claim_id}"),
-        )
-        .event(
-            TraceEvent::new(
-                event_id(2),
-                format!("applied rule {VP_RULE_0001_REFERENCE} to assertion.body and content.body"),
-            )
-            .with_rule_reference(VP_RULE_0001_REFERENCE),
-        )
-        .message(
-            event_id(3),
+            event_id(sequence),
             format!("evaluation completed with outcome {outcome_label}"),
-        );
-
-    builder.build()
+        )
+        .build()
 }
 
 fn event_id(sequence: u32) -> String {

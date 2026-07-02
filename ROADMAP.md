@@ -201,6 +201,35 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 ---
 
+## Milestone D.4 — Evidence claim binding
+
+**Goal:** Implement **VP-RULE-0002** as a short-circuit precondition before **VP-RULE-0001** per [VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md).
+
+**Prerequisite:** [VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md) (draft); Milestone D.3 **VP-RULE-0001** (complete); **VP-CS-0002** fixture published in `veritypay-spec`.
+
+**Outputs:**
+
+- `VpRule0002` implementing **VP-RULE-0002** (Evidence Claim Binding)
+- `RuleSet::platform_1()` — **VP-RULE-0002** then **VP-RULE-0001** with short-circuit on binding failure
+- Trace events for binding pass, short-circuit, and content evaluation paths
+
+**Success criteria:**
+
+- [x] **VP-CS-0001** outcomes unchanged (`satisfied` / `not_satisfied` / `indeterminate`)
+- [x] Mismatched or empty `claim_id` values yield `indeterminate` via **VP-RULE-0002** without running **VP-RULE-0001**
+- [x] Rule references and reason strings cite **VP-RULE-0002** for binding failures
+- [x] Public interpreter contract unchanged (`EvaluationContext` → `evaluate` → `VerificationResult`)
+
+**Not included:**
+
+- VP-RFC-0002 acceptance in spec
+- Conformance harness **VP-CS-0002** execution (Milestone G.5)
+- VP-RULE registry publication
+
+**Milestone status:** **Complete**.
+
+---
+
 ## Milestone E — Produce verification outcome
 
 **Goal:** Emit normative **verification outcomes** as defined by the conformance model.
