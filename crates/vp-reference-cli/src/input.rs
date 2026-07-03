@@ -2,7 +2,7 @@
 
 use std::path::Path;
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use vp_reference_core::{
     ContextBuildError, EvaluationInput, EvaluationOptions, SpecificationContext,
 };
@@ -13,7 +13,7 @@ use vp_reference_model::{
 use crate::error::VerifyError;
 
 /// Developer CLI claim file shape.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ClaimFile {
     pub claim_id: String,
     pub subject: String,
@@ -21,14 +21,14 @@ pub struct ClaimFile {
 }
 
 /// Nested assertion payload in a claim file.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct AssertionFile {
     pub assertion_type: String,
     pub body: String,
 }
 
 /// Developer CLI evidence file shape.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct EvidenceFile {
     pub evidence_id: String,
     pub claim_id: String,
@@ -37,7 +37,7 @@ pub struct EvidenceFile {
 }
 
 /// Nested evidence content in an evidence file.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct EvidenceContentFile {
     pub content_type: String,
     pub body: String,

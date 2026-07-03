@@ -217,7 +217,117 @@ Example verification output:
 
 ```
 ✓ satisfied claim-001
-Reason: ALL_REQUIRED: 1 envelope(s), all satisfied
+Reason: All 1 applicable evidence envelope(s) satisfied (ALL_REQUIRED)
+```
+
+Add `--explain` for a step-by-step developer explanation derived from the evaluation trace:
+
+```bash
+cargo run -p vp-reference-cli --bin vp-reference -- verify \
+  --claim examples/claim.normalized_text.json \
+  --evidence examples/evidence.normalized_text.json \
+  --format human \
+  --explain
+```
+
+Example explain output:
+
+```
+✓ satisfied claim-001
+
+Assertion type: normalized_text
+Evidence: evidence-001
+Policy: ALL_REQUIRED
+
+Applied rules:
+- VP-RULE-0002
+- VP-RULE-0011
+
+Explanation:
+1. Evidence claim_id matched claim claim_id.
+2. Evidence text was normalized.
+3. Normalized assertion body matched normalized evidence body.
+4. ALL_REQUIRED aggregation returned satisfied.
+
+Reason:
+All 1 applicable evidence envelope(s) satisfied (ALL_REQUIRED)
+```
+
+JSON with explain:
+
+```bash
+cargo run -p vp-reference-cli --bin vp-reference -- verify \
+  --claim examples/claim.normalized_text.json \
+  --evidence examples/evidence.normalized_text.json \
+  --format json \
+  --explain
+```
+
+The JSON payload adds `assertion_type`, `evidence`, `policy`, `applied_rules`, and `explanation` alongside `claim_id`, `outcome`, `reason`, and `trace`.
+
+Serve verification over HTTP:
+
+```bash
+cargo run -p vp-reference-cli --bin vp-reference -- serve --host 127.0.0.1 --port 8787
+```
+
+Health check:
+
+```bash
+curl -s http://127.0.0.1:8787/health
+```
+
+Verify via HTTP (same JSON shape as `verify --format json`):
+
+```bash
+curl -s http://127.0.0.1:8787/verify \
+  -H 'content-type: application/json' \
+  -d '{
+    "claim": {
+      "claim_id": "claim-001",
+      "subject": "example-subject",
+      "assertion": {
+        "assertion_type": "normalized_text",
+        "body": "Hello World"
+      }
+    },
+    "evidence": {
+      "evidence_id": "evidence-001",
+      "claim_id": "claim-001",
+      "evidence_type": "document",
+      "content": {
+        "content_type": "text/plain",
+        "body": "  Hello   World  "
+      }
+    }
+  }'
+```
+
+With explanation (`explain` defaults to `false`):
+
+```bash
+curl -s http://127.0.0.1:8787/verify \
+  -H 'content-type: application/json' \
+  -d '{
+    "claim": {
+      "claim_id": "claim-001",
+      "subject": "example-subject",
+      "assertion": {
+        "assertion_type": "normalized_text",
+        "body": "Hello World"
+      }
+    },
+    "evidence": {
+      "evidence_id": "evidence-001",
+      "claim_id": "claim-001",
+      "evidence_type": "document",
+      "content": {
+        "content_type": "text/plain",
+        "body": "  Hello   World  "
+      }
+    },
+    "explain": true
+  }'
 ```
 
 Load-spec example output:

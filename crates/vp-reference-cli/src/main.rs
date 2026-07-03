@@ -4,7 +4,9 @@ use std::path::PathBuf;
 use std::process;
 
 use clap::{Parser, Subcommand, ValueEnum};
-use vp_reference_cli::{run_verify, OutputFormat, VerifyOptions, EXIT_SUCCESS, EXIT_USER_ERROR};
+use vp_reference_cli::{
+    run_serve, run_verify, OutputFormat, ServeOptions, VerifyOptions, EXIT_SUCCESS, EXIT_USER_ERROR,
+};
 use vp_reference_spec::{SpecificationLoadOptions, SpecificationLoader};
 
 #[derive(Parser)]
@@ -37,6 +39,18 @@ enum Command {
         /// Output format.
         #[arg(long, value_enum, default_value_t = CliOutputFormat::Human)]
         format: CliOutputFormat,
+        /// Include step-by-step explanation in the output.
+        #[arg(long)]
+        explain: bool,
+    },
+    /// Expose verification over HTTP.
+    Serve {
+        /// Listen host.
+        #[arg(long, default_value = "127.0.0.1")]
+        host: String,
+        /// Listen port.
+        #[arg(long, default_value_t = 8787)]
+        port: u16,
     },
 }
 
@@ -68,7 +82,9 @@ fn main() {
             claim,
             evidence,
             format,
-        }) => run_verify_command(claim, evidence, format.into()),
+            explain,
+        }) => run_verify_command(claim, evidence, format.into(), explain),
+        Some(Command::Serve { host, port }) => run_serve_command(host, port),
     };
 
     if exit_code != EXIT_SUCCESS {
@@ -95,8 +111,13 @@ fn run_load_spec(spec: PathBuf) -> Result<(), i32> {
     Ok(())
 }
 
-fn run_verify_command(claim: PathBuf, evidence: PathBuf, format: OutputFormat) -> i32 {
-    match run_verify(&VerifyOptions::new(claim, evidence, format)) {
+fn run_verify_command(
+    claim: PathBuf,
+    evidence: PathBuf,
+    format: OutputFormat,
+    explain: bool,
+) -> i32 {
+    match run_verify(&VerifyOptions::new(claim, evidence, format).with_explain(explain)) {
         Ok(output) => {
             println!("{}", output.rendered());
             EXIT_SUCCESS
@@ -104,6 +125,24 @@ fn run_verify_command(claim: PathBuf, evidence: PathBuf, format: OutputFormat) -
         Err(error) => {
             eprintln!("error: {error}");
             EXIT_USER_ERROR
+        }
+    }
+}
+
+fn run_serve_command(host: String, port: u16) -> i32 {
+    let runtime = match tokio::runtime::Runtime::new() {
+        Ok(runtime) => runtime,
+        Err(error) => {
+            eprintln!("error: failed to start async runtime: {error}");
+            return 1;
+        }
+    };
+
+    match runtime.block_on(run_serve(ServeOptions::new(host, port))) {
+        Ok(()) => EXIT_SUCCESS,
+        Err(error) => {
+            eprintln!("error: {error}");
+            1
         }
     }
 }
