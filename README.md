@@ -8,6 +8,28 @@ This repository is part of the **Verity Specification Platform**. It implements 
 
 ---
 
+## Start here
+
+| If you want to… | Start with |
+|-----------------|------------|
+| Run verification from the shell or CI | [DEVELOPER_API.md — CLI](DEVELOPER_API.md#cli) |
+| Integrate from Node.js, Python, Go, or Java | [DEVELOPER_API.md — HTTP API](DEVELOPER_API.md#http-api) |
+| Embed verification in a Rust application | [DEVELOPER_API.md — Rust Library API](DEVELOPER_API.md#rust-library-api) |
+| Understand protocol meaning | [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) — not this repository |
+
+---
+
+## Developer resources
+
+| Resource | Description |
+|----------|-------------|
+| [DEVELOPER_API.md](DEVELOPER_API.md) | CLI, HTTP, and Rust library interfaces |
+| [examples/](examples/) | Sample claim and evidence JSON files |
+| [ADR-0007](docs/adrs/0007-reference-interpreter-public-contract.md) | Stable `Interpreter::evaluate` contract |
+| [ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md) | Assertion type dispatch |
+
+---
+
 ## Documentation
 
 | Document | Description |
@@ -172,10 +194,12 @@ veritypay-reference/
 ├── rust-toolchain.toml        ← Pinned stable Rust
 ├── rustfmt.toml
 ├── README.md                  ← You are here
+├── DEVELOPER_API.md           ← CLI, HTTP, and library developer interfaces
 ├── ARCHITECTURE.md
 ├── ROADMAP.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── examples/                  ← Sample claim and evidence JSON
 ├── scripts/
 │   └── readiness-gate.sh      ← local fmt, clippy, test, CLI smoke
 ├── .github/workflows/ci.yml   ← fmt, clippy, test
