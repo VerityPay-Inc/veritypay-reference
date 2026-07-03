@@ -20,6 +20,7 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | [docs/adrs/0001-reference-implementation-language.md](docs/adrs/0001-reference-implementation-language.md) | ADR-0001 — Implementation language (Rust) |
 | [docs/adrs/0002-workspace-architecture.md](docs/adrs/0002-workspace-architecture.md) | ADR-0002 — Cargo workspace architecture |
 | [docs/adrs/0007-reference-interpreter-public-contract.md](docs/adrs/0007-reference-interpreter-public-contract.md) | ADR-0007 — Public interpreter contract (`evaluate`) |
+| [docs/adrs/0009-assertion-evaluator-architecture.md](docs/adrs/0009-assertion-evaluator-architecture.md) | ADR-0009 — Assertion evaluator dispatch |
 | [LICENSE](LICENSE) | License terms for this repository |
 
 ---
@@ -46,6 +47,8 @@ The interpreter **follows** the specification. It never **defines** it.
 The first implemented protocol rules for **Platform 1.1** are **VP-RULE-0002** (*Evidence Claim Binding*) and **VP-RULE-0001** (*Assertion Body Evidence Match*) from [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) ([VP-RFC-0002](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0002-claim-identity-binding.md), [VP-RFC-0001](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0001-minimal-claim-evidence-semantics.md)).
 
 **Platform 1.2** ([VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md), [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md)) is **accepted in the specification**. This repository implements **`ALL_REQUIRED`** multi-evidence execution via `Interpreter::evaluate_input`. The Platform 1.1 `EvaluationContext` contract remains supported unchanged.
+
+**Platform 1.3 preparation** ([ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md)): the interpreter dispatches by **Assertion Type** through **`AssertionEvaluator`** implementations (`BodyEqualityEvaluator` for `body_equality` / `minimal`). Public entrypoints `evaluate` and `evaluate_input` are unchanged.
 
 ---
 
@@ -143,6 +146,7 @@ Capabilities are delivered **capability-based** per [ROADMAP.md](ROADMAP.md)—n
 | Evaluate minimal claim | Run interpreter against loaded spec | D |
 | Platform 1.2 model groundwork | `EvidenceSet`, `EvaluationPolicy`, `EvaluationInput` | D.5 |
 | Platform 1.2 multi-evidence execution | `Interpreter::evaluate_input`, `ALL_REQUIRED` aggregation | D.6 |
+| Assertion evaluator dispatch | `AssertionEvaluator`, `BodyEqualityEvaluator`, registry | D.7 |
 | Produce verification outcome | `satisfied` / `not_satisfied` / `indeterminate` | E |
 | Produce trace | Explainable evaluation steps | F |
 | Conformance integration | Hooks for VP-CS runners | G |

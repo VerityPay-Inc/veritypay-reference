@@ -1,12 +1,18 @@
 //! Verification logic and evaluation flow for the reference interpreter.
 
 pub mod evaluation_policy;
+pub mod evaluator_run;
+pub mod evaluators;
 pub mod interpreter;
 pub mod rule;
 pub mod rule_evaluation;
 pub mod rule_set;
 pub mod rules;
 
+pub use evaluators::{
+    AssertionEvaluator, AssertionEvaluatorRegistry, BodyEqualityEvaluator,
+    BODY_EQUALITY_ASSERTION_TYPE, MINIMAL_PROFILE_ASSERTION_TYPE,
+};
 pub use interpreter::Interpreter;
 pub use rule::EvaluationRule;
 pub use rule_evaluation::RuleEvaluation;

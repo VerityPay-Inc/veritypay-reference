@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **D.6 — Platform 1.2 multi-evidence execution** *(complete)*
+**Current milestone:** **D.7 — Assertion evaluator architecture** *(complete)*
 
 ---
 
@@ -18,6 +18,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **D** | Evaluate minimal claim | **Complete** |
 | **D.5** | Platform 1.2 model groundwork | **Complete** |
 | **D.6** | Platform 1.2 multi-evidence execution | **Complete** |
+| **D.7** | Assertion evaluator architecture | **Complete** |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
 | **G** | Conformance integration | Not started |
@@ -283,6 +284,35 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 - **VP-CS-0003** / **VP-CS-0004** fixtures or conformance wiring
 - CLI, report, or new protocol rule changes
+
+**Milestone status:** **Complete**.
+
+---
+
+## Milestone D.7 — Assertion evaluator architecture
+
+**Goal:** Refactor the interpreter to dispatch by **Assertion Type** per [ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md), aligning with draft **VP-RFC-0005** / **VP-RFC-0006** without changing public API or protocol outcomes.
+
+**Prerequisite:** Milestone D.6 multi-evidence execution (complete); **VP-RFC-0005** / **VP-RFC-0006** drafted in `veritypay-spec`.
+
+**Outputs:**
+
+- [ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md) — Assertion Evaluator Architecture (Accepted)
+- `AssertionEvaluator` trait, `BodyEqualityEvaluator`, `AssertionEvaluatorRegistry`
+- `Interpreter` dispatches via registry; rules execute only inside evaluators
+
+**Success criteria:**
+
+- [x] `body_equality` and `minimal` (VP-RFC-0001 alias) dispatch to **Body Equality Evaluator**
+- [x] Unknown `assertion_type` yields `indeterminate` per **VP-RFC-0006**
+- [x] `Interpreter::evaluate` and `evaluate_input` unchanged; existing platform tests pass
+- [x] No public API break
+
+**Not included:**
+
+- Normative acceptance of **VP-RFC-0005** / **VP-RFC-0006**
+- Additional evaluator implementations (regex, numeric, signature, …)
+- Conformance or fixture changes
 
 **Milestone status:** **Complete**.
 
