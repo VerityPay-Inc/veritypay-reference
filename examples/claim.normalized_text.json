@@ -1,0 +1,8 @@
+{
+  "claim_id": "claim-001",
+  "subject": "example-subject",
+  "assertion": {
+    "assertion_type": "normalized_text",
+    "body": "Hello World"
+  }
+}

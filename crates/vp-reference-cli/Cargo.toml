@@ -9,13 +9,26 @@ authors.workspace = true
 repository.workspace = true
 rust-version.workspace = true
 
+[lib]
+name = "vp_reference_cli"
+path = "src/lib.rs"
+
 [[bin]]
 name = "vp-reference"
 path = "src/main.rs"
 
 [dependencies]
 clap = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+vp-reference-core = { workspace = true }
+vp-reference-interpreter = { workspace = true }
+vp-reference-model = { workspace = true }
 vp-reference-spec = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+tempfile = { workspace = true }
 
 [lints]
 workspace = true

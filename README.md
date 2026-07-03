@@ -201,10 +201,26 @@ cargo run -p vp-reference-cli --bin vp-reference
 Load a validated `veritypay-spec` checkout (sibling layout assumed):
 
 ```bash
-cargo run -p vp-reference-cli -- load-spec --spec ../veritypay-spec
+cargo run -p vp-reference-cli --bin vp-reference -- load-spec --spec ../veritypay-spec
 ```
 
-Example output:
+Verify a claim against one evidence JSON file (no spec checkout required):
+
+```bash
+cargo run -p vp-reference-cli --bin vp-reference -- verify \
+  --claim examples/claim.normalized_text.json \
+  --evidence examples/evidence.normalized_text.json \
+  --format human
+```
+
+Example verification output:
+
+```
+✓ satisfied claim-001
+Reason: ALL_REQUIRED: 1 envelope(s), all satisfied
+```
+
+Load-spec example output:
 
 ```
 Specification loaded

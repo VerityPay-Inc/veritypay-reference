@@ -47,6 +47,8 @@ vp-reference-model = { path = "crates/vp-reference-model" }
 vp-reference-interpreter = { path = "crates/vp-reference-interpreter" }
 vp-reference-report = { path = "crates/vp-reference-report" }
 clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 tempfile = "3"
 unicode-general-category = "0.6"
 unicode-normalization = "0.1"

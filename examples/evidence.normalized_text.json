@@ -1,0 +1,9 @@
+{
+  "evidence_id": "evidence-001",
+  "claim_id": "claim-001",
+  "evidence_type": "document",
+  "content": {
+    "content_type": "text/plain",
+    "body": "  Hello   World  "
+  }
+}
