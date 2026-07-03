@@ -4,7 +4,7 @@
 
 This repository is part of the **Verity Specification Platform**. It implements **readable reference semantics** for claims, evidence, and verification—so that protocol behavior can be studied, tested, and compared. It does **not** define protocol meaning.
 
-**Repository maturity:** **Specification loading** — Cargo workspace per [ADR-0002](docs/adrs/0002-workspace-architecture.md); validated spec input loads through `vp-spec-model` (Milestone B). Claim parsing and verification not yet implemented.
+**Repository maturity:** **Reference Interpreter Ready** — Platform 1.1/1.2 semantics implemented; Platform 1.3 **`normalized_text`** evaluator in progress per [ROADMAP.md](ROADMAP.md).
 
 ---
 
@@ -48,7 +48,15 @@ The first implemented protocol rules for **Platform 1.1** are **VP-RULE-0002** (
 
 **Platform 1.2** ([VP-RFC-0003](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0003-multiple-evidence.md), [VP-RFC-0004](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0004-evidence-evaluation-policies.md)) is **accepted in the specification**. This repository implements **`ALL_REQUIRED`** multi-evidence execution via `Interpreter::evaluate_input`. The Platform 1.1 `EvaluationContext` contract remains supported unchanged.
 
-**Platform 1.3 preparation** ([ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md)): the interpreter dispatches by **Assertion Type** through **`AssertionEvaluator`** implementations (`BodyEqualityEvaluator` for `body_equality` / `minimal`). Public entrypoints `evaluate` and `evaluate_input` are unchanged.
+**Platform 1.3 preparation** ([ADR-0009](docs/adrs/0009-assertion-evaluator-architecture.md)): the interpreter dispatches by **Assertion Type** through **`AssertionEvaluator`** implementations. **Platform 1.3** *(in progress)* adds **`normalized_text`** via **NormalizedTextEvaluator** and **VP-RULE-0011** per draft [VP-RFC-0011](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0011-normalized-text-assertion.md).
+
+| Platform | Assertion types implemented | Rules |
+|----------|------------------------------|-------|
+| **1.1** | **`body_equality`**, **`minimal`** (alias) | **VP-RULE-0001**, **VP-RULE-0002** |
+| **1.2** | Same as 1.1 | Same + multi-evidence **`ALL_REQUIRED`** |
+| **1.3** *(in progress)* | **`body_equality`**, **`minimal`**, **`normalized_text`** | **VP-RULE-0011** added for **`normalized_text`** |
+
+No other assertion types are implemented.
 
 ---
 

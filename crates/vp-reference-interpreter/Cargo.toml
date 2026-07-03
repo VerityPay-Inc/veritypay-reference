@@ -12,6 +12,8 @@ rust-version.workspace = true
 [dependencies]
 vp-reference-core = { workspace = true }
 vp-reference-model = { workspace = true }
+unicode-general-category = { workspace = true }
+unicode-normalization = { workspace = true }
 
 [lints]
 workspace = true

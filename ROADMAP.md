@@ -4,7 +4,7 @@
 
 This roadmap is **not date-driven**. Milestones complete when their success criteria are met—not when a quarter ends. Progress aligns with [Phase II Platform Plan](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/PHASE_II_PLATFORM_PLAN.md) and the reference interpreter role defined in [CONFORMANCE_MODEL.md](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/03-development/CONFORMANCE_MODEL.md).
 
-**Current milestone:** **D.7 — Assertion evaluator architecture** *(complete)*
+**Current milestone:** **D.8 — Platform 1.3 normalized text assertion** *(in progress)*
 
 ---
 
@@ -19,6 +19,7 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **D.5** | Platform 1.2 model groundwork | **Complete** |
 | **D.6** | Platform 1.2 multi-evidence execution | **Complete** |
 | **D.7** | Assertion evaluator architecture | **Complete** |
+| **D.8** | Platform 1.3 normalized text assertion | **In progress** |
 | **E** | Produce verification outcome | Not started |
 | **F** | Produce trace | Not started |
 | **G** | Conformance integration | Not started |
@@ -315,6 +316,41 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 - Conformance or fixture changes
 
 **Milestone status:** **Complete**.
+
+---
+
+## Milestone D.8 — Platform 1.3 normalized text assertion
+
+**Goal:** Implement draft [VP-RFC-0011](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0011-normalized-text-assertion.md) — **`normalized_text`** assertion type and **VP-RULE-0011** — as the first Content Equality extension beyond **`body_equality`**.
+
+**Prerequisite:** Milestone D.7 assertion evaluator architecture (complete); **VP-RFC-0011** drafted in `veritypay-spec`.
+
+**Outputs:**
+
+- `text_normalization` module — deterministic NFC, trim, whitespace collapse per VP-RFC-0011
+- **VP-RULE-0011** (*Normalized Text Equality*)
+- `NormalizedTextEvaluator` registered in `AssertionEvaluatorRegistry`
+- `RuleSet::platform_1_3()` — **VP-RULE-0002** then **VP-RULE-0011**
+- Integration tests for normalization edge cases and registry dispatch
+
+**Success criteria:**
+
+- [x] **`body_equality`** / **`minimal`** behavior unchanged (Platform 1.1)
+- [x] Platform 1.2 multi-evidence **`ALL_REQUIRED`** behavior unchanged for existing assertion types
+- [x] **`normalized_text`** dispatches to **Normalized Text Evaluator** → **VP-RULE-0011**
+- [x] Normalization pipeline matches VP-RFC-0011 (NFC, trim, collapse, case-sensitive compare)
+- [ ] **VP-CS** fixture for **VP-RULE-0011** (deferred — spec-side)
+- [ ] Conformance harness execution of **VP-RULE-0011** scenarios
+
+**Implemented assertion types:** **`body_equality`** (and **`minimal`** alias) and **`normalized_text`** only. No other assertion types.
+
+**Not included:**
+
+- Normative acceptance of **VP-RFC-0011**
+- Additional Content Equality types (`canonical_json`, …)
+- Additional assertion families (Structural, Pattern Matching, …)
+
+**Milestone status:** **In progress**.
 
 ---
 

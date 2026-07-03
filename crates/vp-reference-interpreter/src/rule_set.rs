@@ -3,7 +3,7 @@
 use std::fmt;
 
 use crate::rule::EvaluationRule;
-use crate::rules::{VpRule0001, VpRule0002};
+use crate::rules::{VpRule0001, VpRule0002, VpRule0011};
 
 /// Owns a deterministic, ordered sequence of [`EvaluationRule`] implementations.
 pub struct RuleSet {
@@ -23,6 +23,12 @@ impl RuleSet {
     #[must_use]
     pub fn platform_1() -> Self {
         Self::from_rules(vec![Box::new(VpRule0002), Box::new(VpRule0001)])
+    }
+
+    /// Platform 1.3 rule set: [`VpRule0002`] then [`VpRule0011`].
+    #[must_use]
+    pub fn platform_1_3() -> Self {
+        Self::from_rules(vec![Box::new(VpRule0002), Box::new(VpRule0011)])
     }
 
     #[must_use]

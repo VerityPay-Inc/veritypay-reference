@@ -5,7 +5,7 @@ use vp_reference_core::{
 };
 use vp_reference_interpreter::{
     AssertionEvaluatorRegistry, Interpreter, BODY_EQUALITY_ASSERTION_TYPE,
-    MINIMAL_PROFILE_ASSERTION_TYPE,
+    MINIMAL_PROFILE_ASSERTION_TYPE, NORMALIZED_TEXT_ASSERTION_TYPE,
 };
 use vp_reference_model::{Assertion, ClaimBuilder, EvidenceBuilder, EvidenceContent, Outcome};
 
@@ -40,6 +40,43 @@ fn evaluation_context(assertion_type: &str) -> EvaluationContext {
         .options(EvaluationOptions::default())
         .build()
         .expect("evaluation context")
+}
+
+#[test]
+fn registry_supports_normalized_text() {
+    let registry = AssertionEvaluatorRegistry::platform_default();
+
+    assert!(registry.supports_assertion_type(NORMALIZED_TEXT_ASSERTION_TYPE));
+    assert!(!registry.supports_assertion_type("regex"));
+}
+
+#[test]
+fn registry_dispatches_normalized_text_to_satisfied() {
+    let claim = ClaimBuilder::new()
+        .id("claim-001")
+        .subject("alice@example.com")
+        .assertion(Assertion::new(NORMALIZED_TEXT_ASSERTION_TYPE, "Hello"))
+        .build()
+        .expect("claim");
+
+    let evidence = EvidenceBuilder::new()
+        .id("evidence-001")
+        .claim_id(claim.id.clone())
+        .content(EvidenceContent::new("document", " Hello "))
+        .build()
+        .expect("evidence");
+
+    let context = EvaluationContext::builder()
+        .specification_context(sample_specification())
+        .claim(claim)
+        .evidence(evidence)
+        .options(EvaluationOptions::default())
+        .build()
+        .expect("evaluation context");
+
+    let result = AssertionEvaluatorRegistry::platform_default().evaluate(&context);
+
+    assert_eq!(result.outcome, Outcome::Satisfied);
 }
 
 #[test]

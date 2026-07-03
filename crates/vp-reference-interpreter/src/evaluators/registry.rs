@@ -7,6 +7,7 @@ use crate::evaluator_run::RuleSetRun;
 use crate::evaluators::body_equality::{
     unknown_assertion_type_result, BodyEqualityEvaluator, BODY_EQUALITY_ASSERTION_TYPE,
 };
+use crate::evaluators::normalized_text::{NormalizedTextEvaluator, NORMALIZED_TEXT_ASSERTION_TYPE};
 use crate::evaluators::trait_def::AssertionEvaluator;
 use crate::rule_set::RuleSet;
 
@@ -17,6 +18,7 @@ pub const MINIMAL_PROFILE_ASSERTION_TYPE: &str = "minimal";
 #[derive(Debug)]
 pub struct AssertionEvaluatorRegistry {
     body_equality: BodyEqualityEvaluator,
+    normalized_text: NormalizedTextEvaluator,
 }
 
 impl AssertionEvaluatorRegistry {
@@ -24,6 +26,7 @@ impl AssertionEvaluatorRegistry {
     pub fn platform_default() -> Self {
         Self {
             body_equality: BodyEqualityEvaluator::new(),
+            normalized_text: NormalizedTextEvaluator::new(),
         }
     }
 
@@ -31,6 +34,7 @@ impl AssertionEvaluatorRegistry {
     pub fn with_body_equality_rule_set(rule_set: RuleSet) -> Self {
         Self {
             body_equality: BodyEqualityEvaluator::with_rule_set(rule_set),
+            normalized_text: NormalizedTextEvaluator::new(),
         }
     }
 
@@ -40,10 +44,17 @@ impl AssertionEvaluatorRegistry {
     }
 
     #[must_use]
+    pub fn normalized_text_rule_set(&self) -> &RuleSet {
+        self.normalized_text.rule_set()
+    }
+
+    #[must_use]
     pub fn supports_assertion_type(&self, assertion_type: &str) -> bool {
         matches!(
             assertion_type,
-            BODY_EQUALITY_ASSERTION_TYPE | MINIMAL_PROFILE_ASSERTION_TYPE
+            BODY_EQUALITY_ASSERTION_TYPE
+                | MINIMAL_PROFILE_ASSERTION_TYPE
+                | NORMALIZED_TEXT_ASSERTION_TYPE
         )
     }
 
@@ -51,18 +62,35 @@ impl AssertionEvaluatorRegistry {
     pub fn evaluate(&self, context: &EvaluationContext) -> VerificationResult {
         let assertion_type = context.claim().assertion.assertion_type.as_str();
 
-        if self.supports_assertion_type(assertion_type) {
+        if matches!(
+            assertion_type,
+            BODY_EQUALITY_ASSERTION_TYPE | MINIMAL_PROFILE_ASSERTION_TYPE
+        ) {
             self.body_equality.evaluate(context)
+        } else if assertion_type == NORMALIZED_TEXT_ASSERTION_TYPE {
+            self.normalized_text.evaluate(context)
         } else {
             unknown_assertion_type_result(context)
         }
     }
 
     pub(crate) fn run_dispatched(&self, context: &EvaluationContext) -> RuleSetRun {
-        debug_assert!(
-            self.supports_assertion_type(context.claim().assertion.assertion_type.as_str())
-        );
-        self.body_equality.run_rules(context)
+        let assertion_type = context.claim().assertion.assertion_type.as_str();
+
+        if matches!(
+            assertion_type,
+            BODY_EQUALITY_ASSERTION_TYPE | MINIMAL_PROFILE_ASSERTION_TYPE
+        ) {
+            self.body_equality.run_rules(context)
+        } else if assertion_type == NORMALIZED_TEXT_ASSERTION_TYPE {
+            self.normalized_text.run_rules(context)
+        } else {
+            debug_assert!(
+                false,
+                "run_dispatched called for unsupported assertion type"
+            );
+            self.body_equality.run_rules(context)
+        }
     }
 }
 

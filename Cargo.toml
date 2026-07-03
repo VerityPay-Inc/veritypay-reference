@@ -48,6 +48,8 @@ vp-reference-interpreter = { path = "crates/vp-reference-interpreter" }
 vp-reference-report = { path = "crates/vp-reference-report" }
 clap = { version = "4", features = ["derive"] }
 tempfile = "3"
+unicode-general-category = "0.6"
+unicode-normalization = "0.1"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
