@@ -116,10 +116,38 @@ fn empty_evidence_body_is_indeterminate() {
 }
 
 #[test]
-fn whitespace_only_bodies_are_deterministic() {
+fn whitespace_only_evidence_is_indeterminate() {
+    assert_eq!(
+        evaluate_normalized_text("Hello", "     "),
+        Outcome::Indeterminate
+    );
+    assert_eq!(
+        evaluate_normalized_text("Hello", "\t\n  "),
+        Outcome::Indeterminate
+    );
+}
+
+#[test]
+fn trimmed_case_mismatch_is_not_satisfied() {
+    assert_eq!(
+        evaluate_normalized_text("Hello", "  hello  "),
+        Outcome::NotSatisfied
+    );
+}
+
+#[test]
+fn trim_and_collapse_still_satisfies() {
+    assert_eq!(
+        evaluate_normalized_text("Hello    World", "  Hello World  "),
+        Outcome::Satisfied
+    );
+}
+
+#[test]
+fn whitespace_only_assertion_and_evidence_is_indeterminate() {
     assert_eq!(
         evaluate_normalized_text("   \t  ", " \n "),
-        Outcome::Satisfied
+        Outcome::Indeterminate
     );
 }
 

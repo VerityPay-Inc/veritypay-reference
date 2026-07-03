@@ -60,6 +60,14 @@ impl EvaluationRule for VpRule0011 {
             }
         };
 
+        if normalized_evidence.is_empty() {
+            return RuleEvaluation::new(
+                Outcome::Indeterminate,
+                "Evidence content body is empty after normalization (VP-RULE-0011)",
+            )
+            .with_rule_reference(VP_RULE_0011_REFERENCE);
+        }
+
         if normalized_evidence == normalized_assertion {
             RuleEvaluation::new(
                 Outcome::Satisfied,
