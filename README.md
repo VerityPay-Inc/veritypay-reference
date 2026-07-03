@@ -13,6 +13,7 @@ This repository is part of the **Verity Specification Platform**. It implements 
 | Document | Description |
 |----------|-------------|
 | [README.md](README.md) | Purpose, boundaries, and ecosystem links *(this file)* |
+| [DEVELOPER_API.md](DEVELOPER_API.md) | Developer-facing CLI, HTTP, and library verification interfaces |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Long-term component model—conceptual, not executable code |
 | [ROADMAP.md](ROADMAP.md) | Capability milestones A–G with success criteria |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute to the reference interpreter |
@@ -204,7 +205,7 @@ Load a validated `veritypay-spec` checkout (sibling layout assumed):
 cargo run -p vp-reference-cli --bin vp-reference -- load-spec --spec ../veritypay-spec
 ```
 
-Verify a claim against one evidence JSON file (no spec checkout required):
+Verify a claim against one evidence JSON file (no spec checkout required). See [DEVELOPER_API.md](DEVELOPER_API.md) for full CLI, HTTP, and library documentation.
 
 ```bash
 cargo run -p vp-reference-cli --bin vp-reference -- verify \
