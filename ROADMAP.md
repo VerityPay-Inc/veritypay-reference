@@ -19,10 +19,10 @@ This roadmap is **not date-driven**. Milestones complete when their success crit
 | **D.5** | Platform 1.2 model groundwork | **Complete** |
 | **D.6** | Platform 1.2 multi-evidence execution | **Complete** |
 | **D.7** | Assertion evaluator architecture | **Complete** |
-| **D.8** | Platform 1.3 normalized text assertion | **In progress** |
-| **E** | Produce verification outcome | Not started |
-| **F** | Produce trace | Not started |
-| **G** | Conformance integration | Not started |
+| **D.8** | Platform 1.3 normalized text assertion | **Complete** *(implementation)* — VP-RFC-0011 acceptance still draft |
+| **E** | Produce verification outcome | **Complete** |
+| **F** | Produce trace | **Partial** — interpreter trace + CLI `--explain`; `vp-reference-report` crate placeholder |
+| **G** | Conformance integration | **Complete** — `veritypay-conformance` invokes reference oracle |
 
 Each milestone below includes **Goal**, **Outputs**, **Success criteria**, and **Not included** so scope stays explicit.
 
@@ -339,8 +339,8 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 - [x] Platform 1.2 multi-evidence **`ALL_REQUIRED`** behavior unchanged for existing assertion types
 - [x] **`normalized_text`** dispatches to **Normalized Text Evaluator** → **VP-RULE-0011**
 - [x] Normalization pipeline matches VP-RFC-0011 (NFC, trim, collapse, case-sensitive compare)
-- [ ] **VP-CS** fixture for **VP-RULE-0011** (deferred — spec-side)
-- [ ] Conformance harness execution of **VP-RULE-0011** scenarios
+- [x] **VP-CS** fixtures for **VP-RULE-0011** published in `veritypay-spec` (**VP-CS-0011**–**0013**)
+- [x] Conformance harness execution of **VP-RULE-0011** scenarios
 
 **Implemented assertion types:** **`body_equality`** (and **`minimal`** alias) and **`normalized_text`** only. No other assertion types.
 
@@ -350,7 +350,7 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 - Additional Content Equality types (`canonical_json`, …)
 - Additional assertion families (Structural, Pattern Matching, …)
 
-**Milestone status:** **In progress**.
+**Milestone status:** **Complete** *(implementation)* — normative RFC acceptance remains draft.
 
 ---
 
@@ -368,17 +368,19 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Success criteria:**
 
-- [ ] At least one positive fixture yields `satisfied`
-- [ ] At least one negative fixture yields `not_satisfied`
-- [ ] Insufficient-evidence fixture yields `indeterminate` when spec requires it
-- [ ] Outcome is bound to specification version used at evaluation time
-- [ ] No non-normative outcome labels introduced
+- [x] At least one positive fixture yields `satisfied`
+- [x] At least one negative fixture yields `not_satisfied`
+- [x] Insufficient-evidence fixture yields `indeterminate` when spec requires it
+- [x] Outcome is bound to specification version used at evaluation time
+- [x] No non-normative outcome labels introduced
 
 **Not included:**
 
-- Full trace (Milestone F)
-- Conformance suite orchestration (Milestone G)
+- Dedicated report crate polish (Milestone F — partial)
+- Conformance suite orchestration (Milestone G — delivered in `veritypay-conformance`)
 - Cross-implementation interoperability testing (owned by `veritypay-conformance`)
+
+**Milestone status:** **Complete**.
 
 ---
 
@@ -394,16 +396,19 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Success criteria:**
 
-- [ ] Every outcome in Milestone E fixtures includes a trace
-- [ ] Trace steps are ordered and human-readable
-- [ ] Trace does not alter outcome—explanation only
-- [ ] Reviewer can follow claim → rules applied → outcome without reading source first
+- [x] Every outcome in Milestone E fixtures includes a trace
+- [x] Trace steps are ordered and human-readable
+- [x] Trace does not alter outcome—explanation only
+- [x] Reviewer can follow claim → rules applied → outcome without reading source first (via CLI `--explain`)
 
 **Not included:**
 
+- Dedicated `vp-reference-report` crate (placeholder; CLI `output.rs` / `explain.rs` fulfill developer output today)
 - Machine-readable trace protocol for production systems (unless promoted upstream)
-- Conformance diff tooling (Milestone G / `veritypay-conformance`)
+- Conformance diff tooling (`veritypay-conformance`)
 - Performance profiling of trace capture
+
+**Milestone status:** **Partial** — interpreter trace and CLI explain delivered; report crate deferred.
 
 ---
 
@@ -422,10 +427,10 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 
 **Success criteria:**
 
-- [ ] `veritypay-conformance` (or equivalent harness) can invoke the reference interpreter without fork-specific glue
-- [ ] VP-CS-0001 or agreed minimal scenario produces expected outcome
-- [ ] Exit codes or structured results suitable for CI
-- [ ] Reference behavior documented as oracle—not mandatory production dependency
+- [x] `veritypay-conformance` can invoke the reference interpreter without fork-specific glue
+- [x] VP-CS-0001 and VP-CS-0011–0013 produce expected outcomes via reference oracle
+- [x] Exit codes or structured results suitable for CI
+- [x] Reference behavior documented as oracle—not mandatory production dependency
 
 **Not included:**
 
@@ -433,6 +438,8 @@ Path-free interpreter input contract in `vp-reference-core` per ADR-0003 v1.1.0.
 - Certification, badges, or vendor programs
 - Production deployment or SDK packaging
 - Full VP-CS catalog coverage (incremental)
+
+**Milestone status:** **Complete**.
 
 ---
 

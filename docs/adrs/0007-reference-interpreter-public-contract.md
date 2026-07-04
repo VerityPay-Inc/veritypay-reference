@@ -134,9 +134,9 @@ This contract is intended for:
 
 | Consumer | Usage |
 |----------|--------|
-| **CLI** (`vp-reference-cli`) | Assemble **`EvaluationContext`**; call **`evaluate`**; dispatch to output (future) |
-| **Reports** (`vp-reference-report`) | Format **`VerificationResult`** without re-running evaluation |
-| **`veritypay-conformance`** (future) | Default oracle for VP-CS expected outcomes |
+| **CLI** (`vp-reference-cli`) | Assemble **`EvaluationInput`**; call **`evaluate_input`** (verify/serve) or **`evaluate`** (conformance oracle path); human/JSON output via `output.rs` / `explain.rs` |
+| **Reports** (`vp-reference-report`) | Format **`VerificationResult`** without re-running evaluation *(crate placeholder; CLI output delivered)* |
+| **`veritypay-conformance`** | Default oracle for VP-CS expected outcomes via **`evaluate`** |
 | **Examples and education** | Demonstrate claim → evidence → outcome |
 | **SDK / implementation comparisons** | Compare independent stacks against the same result shape |
 

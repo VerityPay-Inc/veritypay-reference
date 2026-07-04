@@ -64,7 +64,7 @@ For protocol and governance context, read [veritypay-spec — CONTRIBUTING](http
 | Add a new verification outcome label | Governance or RFC in `veritypay-spec`, then implement here |
 | Implement `verify(claim, evidence, spec_version)` for accepted rules | Pull request in **this** repository |
 | Validate registry YAML or fix broken links | Pull request in **`veritypay-tooling`** |
-| Run VP-CS suites and aggregate pass/fail | **`veritypay-conformance`** (future) |
+| Run VP-CS suites and aggregate pass/fail | **`veritypay-conformance`** |
 | Change Architecture Alpha | RFC in `veritypay-spec` ([GOVERNANCE](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/docs/05-governance/GOVERNANCE.md)) |
 
 When unsure, **default to spec governance first.**
@@ -131,7 +131,7 @@ Before requesting review:
 |------------|--------------|
 | [`veritypay-spec`](https://github.com/VerityPay-Inc/veritypay-spec) | Source of truth — defines meaning |
 | [`veritypay-tooling`](https://github.com/VerityPay-Inc/veritypay-tooling) | Validates corpus; supplies `vp-spec-model` |
-| [`veritypay-conformance`](https://github.com/VerityPay-Inc/veritypay-conformance) | VP-CS runners (future) — consumes reference outcomes |
+| [`veritypay-conformance`](https://github.com/VerityPay-Inc/veritypay-conformance) | VP-CS runners — consumes reference outcomes |
 
 ---
 

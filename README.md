@@ -4,7 +4,7 @@
 
 This repository is part of the **Verity Specification Platform**. It implements **readable reference semantics** for claims, evidence, and verification—so that protocol behavior can be studied, tested, and compared. It does **not** define protocol meaning.
 
-**Repository maturity:** **Reference Interpreter Ready** — Platform 1.1/1.2 semantics implemented; Platform 1.3 **`normalized_text`** evaluator in progress per [ROADMAP.md](ROADMAP.md).
+**Repository maturity:** **Reference Interpreter Ready** — Platform 1.1/1.2 semantics implemented; Platform 1.3 **`normalized_text`** engineering semantics implemented per draft [VP-RFC-0011](https://github.com/VerityPay-Inc/veritypay-spec/blob/main/rfcs/0011-normalized-text-assertion.md) (normative acceptance pending).
 
 ---
 
@@ -114,7 +114,7 @@ veritypay-tooling         ← validates corpus integrity
        ↓ enables
 veritypay-reference       ← executable semantics (this repo)
        ↓ enables
-veritypay-conformance     ← VP-CS runners (future)
+veritypay-conformance     ← VP-CS runners (Conformance Platform Ready)
 ```
 
 | Responsibility | `veritypay-spec` | `veritypay-reference` |
@@ -157,7 +157,8 @@ Validation rules and diagnostic policy remain in tooling. Verification semantics
 | VP-CS scenario authoring (normative text) | `veritypay-spec` |
 | Conformance suite orchestration and reporting | `veritypay-conformance` |
 | Production performance, scaling, or HA | Product implementations |
-| SDKs, HTTP APIs, chain adapters | Future product or SDK repos |
+| SDKs, chain adapters | Future product or SDK repos |
+| Production HTTP APIs | Product implementations — reference developer HTTP (`vp-reference serve`) is documented in [DEVELOPER_API.md](DEVELOPER_API.md) |
 | Payroll UI, wallets, or merchant apps | Product repositories |
 | Defining new verification outcomes or claim types | RFC in `veritypay-spec` |
 
@@ -179,8 +180,8 @@ Capabilities are delivered **capability-based** per [ROADMAP.md](ROADMAP.md)—n
 | Platform 1.2 multi-evidence execution | `Interpreter::evaluate_input`, `ALL_REQUIRED` aggregation | D.6 |
 | Assertion evaluator dispatch | `AssertionEvaluator`, `BodyEqualityEvaluator`, registry | D.7 |
 | Produce verification outcome | `satisfied` / `not_satisfied` / `indeterminate` | E |
-| Produce trace | Explainable evaluation steps | F |
-| Conformance integration | Hooks for VP-CS runners | G |
+| Produce trace | Interpreter trace + CLI `--explain` | F |
+| Conformance integration | Reference oracle consumed by `veritypay-conformance` | G |
 
 Long-term structure: [ARCHITECTURE.md](ARCHITECTURE.md).
 
@@ -374,7 +375,7 @@ This loads registries, documents, and the reference graph through [`vp-spec-mode
 ./scripts/readiness-gate.sh
 ```
 
-Runs `cargo fmt --check`, `cargo clippy`, `cargo test`, a CLI smoke run, and `load-spec` against sibling `../veritypay-spec` when present. Skips spec loading with a clear message if the checkout is absent.
+Runs `cargo fmt --check`, `cargo clippy`, `cargo test`, a CLI boot check, and `load-spec` against sibling `../veritypay-spec` when present. Skips spec loading with a clear message if the checkout is absent.
 
 CI runs `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace`.
 
